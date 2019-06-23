@@ -1,0 +1,567 @@
+﻿@using System.Collections
+@using C3.Reporting.CMT.Web.WebApp.Models
+@{
+    ViewBag.Title = "Campaign Items";
+}
+
+<script src="https://kendo.cdn.telerik.com/2017.1.223/js/kendo.all.min.js"></script>
+
+
+<h2>Campaign Item Management</h2>
+
+<h4>Active Campaigns</h4>
+
+@if (TempData["UploadResult"] != null)
+{
+    <p>@TempData["UploadResult"]</p>
+}
+@if (TempData["WarningResult"] != null)
+{
+    <p>@TempData["WarningResult"]</p>
+    <a href="@Url.Action("Download", "Campaign")">Click here to download the Log File</a>
+}
+
+
+ 
+
+<div>
+    @(Html.Kendo().Grid<CampaignViewModel>()
+      .Name("CampaignGrid")
+      .Columns(columns =>
+      {
+          columns.Bound(c => c.BusinessFormat).EditorTemplateName("BusinessFormatEditor").Filterable(filterable => filterable.UI("businessFilter")).Title("Format");
+          columns.Bound(c => c.CampaignCode);
+          columns.Bound(c => c.CampaignName).Width(150);
+          columns.ForeignKey(c => c.CampaignTypeId, (IEnumerable)ViewBag.CampaignTypes, "CampaignTypeId", "CampaignTypeName")
+              .Title("Campaign Type");
+          columns.Bound(c => c.Description).Width(250);
+          columns.Bound(c => c.StartDate).Format("{0:dd/MM/yyyy}");
+          columns.Bound(c => c.EndDate).Format("{0:dd/MM/yyyy}");
+          columns.ForeignKey(c => c.RedemptionCodeId, (IEnumerable)ViewBag.RedemptionCodes, "RedemptionCodeId", "Description")
+              .Title("Offer Code").Width(250);
+      })
+      .Pageable()
+      .Sortable()
+      .Scrollable(s => s.Height("auto"))
+      .Filterable(filterable => filterable.Extra(false))
+      .Navigatable()
+      .ClientDetailTemplateId("CampaignItemTemplate")
+      .HtmlAttributes(new { style = "font-size:12px" })
+      .DataSource(dataSource => dataSource
+          .Ajax()
+          .PageSize(20)
+          .Events(events => events.Error("error_handler"))
+          .Model(model =>
+          {
+              model.Id(p => p.CampaignId);
+              model.Field(p => p.CampaignId).Editable(false);
+              model.Field(p => p.CampaignCode).Editable(false);
+          })
+          .Read(read => read.Action("ActiveCampaigns_Read", "Campaign"))
+
+      )
+      .AutoBind(true)
+      .Selectable(selectable => selectable.Mode(GridSelectionMode.Single))
+      .Resizable(resize => resize.Columns(true))
+      .Events(events => events.DetailExpand("detailExpand"))
+    )
+
+    <script id="CampaignItemTemplate" type="text/kendo-tmpl">
+        @(Html.Kendo().TabStrip()
+              .Name("tabStrip_#=CampaignId#")
+              .SelectedIndex(0)
+              .Items(tabStrip =>
+              {
+                  tabStrip.Add().Text("Add Items")
+                      .Content(@<text>
+
+                    <div>
+                        <label class="search-label" for="searchBox">Search items that match these criteria :</label>
+                        <input type="search" id="searchBox" class="k-textbox" style="width: 500px" placeholder="Enter Item Code, Vendor or Description" />
+                        <input type="button" id="btnSearch" onClick="searchItems((#=CampaignId#))" class="k-button" value="Search" />
+                        <input type="button" id="btnReset" onClick="resetItems((#=CampaignId#))" class="k-button" value="Reset" />
+                    </div>
+
+                    <br />
+
+                    <div>
+                        @(Html.Kendo().Grid<ProductItemModel>()
+                          .Name("ProductItemsGrid_#=CampaignId#")
+                          .Columns(columns =>
+                          {
+                              columns.Bound(c => c.ItemCode).Title("Item Code").Filterable(filter => filter.Extra(false));
+                              columns.Bound(c => c.VendorCode).Filterable(filterable => filterable.Extra(false).UI("vendorFilter")).Title("Vendor");
+                              columns.Bound(c => c.Description).Title("Description").Filterable(filter => filter.Extra(false)).Width(250);
+                              columns.Bound(c => c.DepartmentName).Filterable(filterable => filterable.Extra(false).UI("departmentFilter")).Title("Department");
+                              columns.Bound(c => c.CategoryName).Filterable(filterable => filterable.Extra(false).UI("categoryFilter")).Title("Category");
+                              columns.Bound(c => c.Price).Filterable(false).Title("AUD").Format("{0:c}");
+                              columns.Bound(c => c.NzUnitPrice).Filterable(false).Title("NZD").Format("{0:c}");
+                              columns.Bound(c => c.Lifestage).Filterable(filterable => filterable.Extra(false).UI("lifestageFilter")).Title("Lifestage"); ;
+                              columns.Bound(c => c.LimitedEdition).Title("Limited Ed").Filterable(filter => filter.Extra(false));
+                              columns.Bound(c => c.LaunchDate).Format("{0:dd/MM/yyyy}").Title("Launch Date");
+                              columns.Bound(c => c.TerminationDate).Format("{0:dd/MM/yyyy}").Title("Termination Date");
+                              columns.Bound(c => c.RangingCodeMecca).Title("Mecca").Filterable(filter => filter.Extra(false));
+                              columns.Bound(c => c.RangingCodeMaxima).Title("Maxima").Filterable(filter => filter.Extra(false));
+                              columns.Bound(c => c.RangingCodeImo).Title("AU Online").Filterable(filter => filter.Extra(false));
+                              columns.Bound(c => c.CompanySoh).Title("Cmpy Soh").Filterable(filter => filter.Extra(false));
+                              columns.Bound(c => c.StockOnOrder).Title("Stock On Order").Filterable(filter => filter.Extra(false));
+                              columns.Bound(c => c.ExpectedReceiptDate).Title("Expected Receipt Date").Filterable(filter => filter.Extra(false));
+                              columns.Bound(c => c.NoTester).Title("No Tester").Filterable(filter => filter.Extra(false));
+                              columns.Bound(c => c.TravelSize).Title("Travel Size").Filterable(filter => filter.Extra(false));
+                          })
+                          .Filterable()
+                          .DataSource(dataSource => dataSource
+                              .Ajax()
+                              .PageSize(20)
+                              .Read(read => read.Action("ProductItems_Read", "Campaign", new { campaignId = "#=CampaignId#" }))
+                              .Model(model => model.Id(p => p.ProductId))
+                              .Total(100)
+                          )
+                          .Pageable(pager => pager.PageSizes(new[] { 10, 20, 100 }))
+                          .Sortable()
+                          .Filterable()
+                          .Selectable(selectable => selectable
+                              .Mode(GridSelectionMode.Multiple)
+                              .Type(GridSelectionType.Row))
+                          .Resizable(resize => resize.Columns(true))
+                          .ColumnMenu()
+                          .ToClientTemplate())
+
+                        <input type="checkbox" id="segmentCheck" />Add items to catalogue segments <br />
+                        <input type="button" class="k-button" value="Add Selected" onClick="addItems(#=CampaignId#)" />
+                        <input type="button" class="k-button" value="Add All on Page" onClick="addAllFilteredItems(#=CampaignId#)" />
+                    </div>
+
+                    </text>
+                      );
+                  tabStrip.Add().Text("Campaign Items").Content(
+                    @<text>
+                        @(Html.Kendo().Grid<CampaignItemModel>()
+                      .Name("CampaignItemsGrid_#=CampaignId#")
+                      .Columns(columns =>
+                      {
+                          columns.Bound(c => c.ItemCode).Title("Item Code").Filterable(filter => filter.Extra(false));
+                          columns.Bound(c => c.VendorCode).Filterable(filterable => filterable.Extra(false).UI("vendorFilter")).Title("Vendor");
+                          columns.Bound(c => c.Description).Title("Description").Filterable(false);
+                          columns.Bound(c => c.DepartmentName).Filterable(false);
+                          columns.Bound(c => c.CategoryName).Filterable(false);
+                          columns.Bound(c => c.UnitPrice).Filterable(false).Title("AUD").Format("{0:c}");
+                          columns.Bound(c => c.NzUnitPrice).Filterable(false).Title("NZD").Format("{0:c}");
+                          columns.Bound(c => c.Lifestage).Filterable(false);
+                          columns.Bound(c => c.LimitedEdition).Title("Limited Ed").Filterable(false);
+                          columns.Bound(c => c.StartDate).Format("{0:dd/MM/yyyy}").Title("Start Date").Filterable(false);
+                          columns.Bound(c => c.EndDate).Format("{0:dd/MM/yyyy}").Title("End Date").Filterable(false);
+                          columns.Bound(c => c.LaunchDate).Format("{0:dd/MM/yyyy}").Title("Launch Date").Filterable(false);
+                          columns.Bound(c => c.TerminationDate).Format("{0:dd/MM/yyyy}").Title("Termination Date").Filterable(false);
+                          columns.Bound(c => c.RangingCodeMecca).Title("Mecca").Filterable(false);
+                          columns.Bound(c => c.RangingCodeMaxima).Title("Maxima").Filterable(false);
+                          columns.Bound(c => c.RangingCodeImo).Title("AU Online").Filterable(false);
+                          columns.Bound(c => c.CompanySoh).Title("Cmpy Soh").Filterable(false);
+                          columns.Bound(c => c.StockOnOrder).Title("Stock On Order").Filterable(false);
+                          columns.Bound(c => c.ExpectedReceiptDate).Format("{0:dd/MM/yyyy}").Title("Expected Receipt Date ").Filterable(false);
+                          columns.Bound(c => c.NoTester).Title("No Tester").Filterable(false);
+                          columns.Bound(c => c.TravelSize).Title("Travel Size").Filterable(false);
+                          columns.Bound(c => c.DateAdded).Format("{0:dd/MM/yyyy}").Title("Date Added").Filterable(false);
+                          columns.Command(command => command.Edit());
+                      })
+                      .DataSource(dataSource => dataSource
+                          .Ajax()
+                          .PageSize(20)
+                          .Read(read => read.Action("CampaignItems_Read", "Campaign", new { campaignId = "#=CampaignId#" }))
+                          .Update("CampaignItems_Update", "Campaign")
+                          .Model(model =>
+                          {
+                              model.Id(p => p.ProductId);
+                              model.Field(p => p.ProductId).Editable(false);
+                          })
+                      )
+                      .Pageable(pager => pager.PageSizes(new[] { 10, 20, 100 }))
+                      .ToolBar(toolBar => toolBar.Custom()
+                          .Text("Export To CSV")
+                          .HtmlAttributes(new { id = "export" })
+                          .Url(Url.Action("Export", "Campaign", new { page = "~", pageSize = "~", filter = "~", sort = "~", campaignId = "#=CampaignId#" })))
+                      .Pageable(pager => pager.Refresh(true).Messages(messages => messages.Refresh("Click to refresh")))
+                      .Sortable()
+                      .Filterable()
+                      .Events(ev => ev.DataBound("onDataBound"))
+                      .Selectable(selectable => selectable
+                          .Mode(GridSelectionMode.Multiple)
+                          .Type(GridSelectionType.Row))
+                      .Resizable(resize => resize.Columns(true))
+                      .Editable(editable => editable.Mode(GridEditMode.InLine))
+                      .ColumnMenu()
+                      .ToClientTemplate()
+                        )
+
+                        <input type="button" class="k-button" value="Remove Selected" onClick="removeItems(#=CampaignId#)" />
+                        <input type="button" class="k-button" value="Remove All on Page" onClick="removeAllItems(#=CampaignId#)" />
+                    </text>
+                      );
+                  tabStrip.Add().Text("Upload Campaign Items").Content(
+                    @<text>
+                        <div>
+                            <form action="/Campaign/Upload?CampaignId=#=CampaignId#" enctype="multipart/form-data" id="form0" method="post" novalidate="novalidate">
+                                @(Html.Kendo().Upload().Multiple(false)
+                              .Name("files")
+                              .Events(events => events.Select("onSelect"))
+                              .ToClientTemplate()
+                                )
+                                <input type="submit" class="k-button" value="Submit" />
+                            </form>
+
+                        </div>
+                    </text>
+                      );
+              })
+              .ToClientTemplate()
+        )
+
+    </script>
+
+    <script type="text/javascript">
+        var expandedRow;
+
+        function error_handler(e) {
+            if (e.errors) {
+                var message = "Errors:\n";
+                $.each(e.errors, function (key, value) {
+                    if ('errors' in value) {
+                        $.each(value.errors, function () {
+                            message += this + "\n";
+                        });
+                    }
+                });
+                alert(message);
+            }
+        }
+
+        function businessFilter(element) {
+            element.kendoDropDownList({
+                dataSource: {
+                    transport: {
+                        read: "@Url.Action("FilterMenuCustomization_Business")"
+                    }
+                },
+                optionLabel: "--Select Business--"
+            });
+        }
+
+        function vendorFilter(element) {
+            element.kendoDropDownList({
+                dataSource: {
+                    transport: {
+                        read: "@Url.Action("FilterMenuCustomization_Vendor")"
+                    }
+                },
+                optionLabel: "--Select Vendor--"
+            });
+        }
+
+        function departmentFilter(element) {
+            element.kendoAutoComplete({
+                dataSource: {
+                    transport: {
+                        read: "@Url.Action("FilterMenuCustomization_Department")"
+                    }
+                }
+            });
+        }
+
+        function categoryFilter(element) {
+            element.kendoAutoComplete({
+                dataSource: {
+                    transport: {
+                        read: "@Url.Action("FilterMenuCustomization_Category")"
+                    }
+                }
+            });
+        }
+
+        function lifestageFilter(element) {
+            element.kendoDropDownList({
+                dataSource: {
+                    transport: {
+                        read: "@Url.Action("FilterMenuCustomization_Lifestage")"
+                    }
+                },
+                optionLabel: "--Select Lifestage--"
+            });
+        }
+
+        function addItems(campaignId) {
+            var selectedGrid = "ProductItemsGrid_" + campaignId;
+            var checked;
+
+            var grid = $('#'+selectedGrid).data('kendoGrid');
+            if ($("#segmentCheck").is(':checked')) {
+                checked = true;
+            } else {
+                checked = false;
+            }
+            var rows = grid.select();
+            
+
+            rows.each(function (index, row) {
+                var selectedItem = grid.dataItem(row);
+
+                var postData = { campaignId: campaignId, productId: selectedItem.ProductId, segmentAdd: checked };
+
+                $.ajax({
+                    url: '@Url.Action("AddCampaignItem")',
+                    type: 'POST',
+                    data: postData,
+                    cache: false,
+                    success: function (result) {
+                    }
+                });
+
+                var campaignGrid = "CampaignItemsGrid_" + campaignId;
+                $('#' + campaignGrid).data("kendoGrid").dataSource.fetch();
+            });
+        }
+
+        function addAllFilteredItems(campaignId) {
+
+            // Gets the data source from the grid.
+            var productGrid = "ProductItemsGrid_" + campaignId;
+            var grid = $('#' + productGrid).data('kendoGrid').dataSource;
+
+            var checked;
+            if ($("#segmentCheck").is(':checked')) {
+                checked = true;
+            } else {
+                checked = false;
+            }
+
+            // Gets the full set of data from the data source
+            var allData = grid.data();
+
+            // Gets the filter from the dataSource
+            var filters = grid.filter();
+
+            // Applies the filter to the data
+            var query = new kendo.data.Query(allData);
+            var filteredData = query.filter(filters).data;            
+
+            $.each(filteredData, function (index, item) {
+
+                var postData = { campaignId: campaignId, productId: item.ProductId, segmentAdd: checked };
+
+                $.ajax({
+                    url: '@Url.Action("AddCampaignItem","Campaign")',
+                    type: 'GET',
+                    data: postData,
+                    cache: false,
+                    success: function (result) {
+                    }
+                });                
+            });
+
+            var campaignGrid = "CampaignItemsGrid_" + campaignId;
+            $('#' + campaignGrid).data("kendoGrid").dataSource.fetch();
+        }
+
+        function removeItems(campaignId) {
+            var campaignGrid = "CampaignItemsGrid_" + campaignId;
+
+            var grid = $('#'+campaignGrid).data('kendoGrid');
+            var rows = grid.select();
+            var itemCounter = 0;
+
+            var r = confirm("Are you sure you want to remove these items from this campaign? Note: If these items are in segments of this campaign, they will also be removed.");
+            if (r == true) {
+                rows.each(function (index, row) {
+                    var selectedItem = grid.dataItem(row);
+                    var postData = { campaignId: campaignId, productId: selectedItem.ProductId };
+                    itemCounter++;
+
+                    $.ajax({
+                        url: '@Url.Action("DeleteCampaignItem")',
+                        type: 'GET',
+                        data: postData,
+                        cache: false,
+                        async:   false,
+                        success: function (result) {
+                        }
+                    });
+                });
+
+                $('#' + campaignGrid).data("kendoGrid").dataSource.read();
+            }
+
+            // Send email only when all item deletion are done
+            if (rows.length == itemCounter) {
+                sendEmail();
+            }
+        }
+
+        function removeAllItems(campaignId) {
+
+            // Gets the data source from the grid.
+            var campaignGrid = "CampaignItemsGrid_" + campaignId;
+            var grid = $('#' + campaignGrid).data('kendoGrid').dataSource;
+
+            // Gets the full set of data from the data source
+            var allData = grid.data();
+
+            // Gets the filter from the dataSource
+            var filters = grid.filter();
+
+            // Applies the filter to the data
+            var query = new kendo.data.Query(allData);
+            var filteredData = query.filter(filters).data;
+            var itemCounter = allData.length;
+
+            var r = confirm("Are you sure you want to remove these items from this campaign? Note: If these items are in segments of this campaign, they will also be removed.");
+            if (r == true) {
+
+                $.each(filteredData, function (index, item) {
+                    var postData = { campaignId: campaignId, productId: item.ProductId };
+
+                    $.ajax({
+                        url: '@Url.Action("DeleteCampaignItem")',
+                        type: 'GET',
+                        data: postData,
+                        cache: false,
+                        async: false,
+                        success: function (result) {
+                            // process the results from the controller action
+                            //result = jQuery.parseJSON(result);
+                            //alert("Item(s) added.");
+                        }
+                    });
+
+                });
+
+                $('#' + campaignGrid).data("kendoGrid").dataSource.read();
+            }
+
+            // Send email only when all item deletion are done
+            if (itemCounter > 0) {
+                sendEmail();
+            }
+        }
+
+        function sendEmail() {
+            // Send email notification after all campaign item removals are done
+            $.ajax({
+                url: '@Url.Action("ProcessEmail")',
+                type: 'GET',
+                cache: false,
+                success: function (result) {
+                    // process the results from the controller action
+                    //result = jQuery.parseJSON(result);
+                    //alert(result);
+                }
+            });
+
+            alert("Email Notifications Sent.");
+        }
+        function clearFilter() {
+            $("form.k-filter-menu button[type='reset']").trigger("click");
+        }
+
+        function detailExpand(e) {
+            var grid = $('#CampaignGrid').data('kendoGrid');
+            // Only one open at a time
+            if (expandedRow != null && expandedRow[0] != e.masterRow[0]) {
+                grid.collapseRow(expandedRow);
+            }
+            expandedRow = e.masterRow;
+            grid.select(expandedRow);
+        }
+
+        function onDataBound(e) {
+            var campaignGrid = $('#CampaignGrid').data('kendoGrid');
+            var row = campaignGrid.select();
+
+            if (row != null) {
+                var selectedCampaignId = campaignGrid.dataItem(row);
+
+                if (selectedCampaignId != null) {
+                    var campaignId = selectedCampaignId.CampaignId;
+                    var campaignItemGrid = "CampaignItemsGrid_" + campaignId;
+
+                    var grid = $('#' + campaignItemGrid).data('kendoGrid');
+
+                    // ask the parameterMap to create the request object for you
+                    var requestObject = (new kendo.data.transports["aspnetmvc-server"]({ prefix: "" }))
+                        .options.parameterMap({
+                            page: grid.dataSource.page(),
+                            sort: grid.dataSource.sort(),
+                            filter: grid.dataSource.filter()
+                        });
+
+                    // Get the export link as jQuery object
+                    var $exportLink = $('#export');
+
+                    // Get its 'href' attribute - the URL where it would navigate to
+                    var href = $exportLink.attr('href');
+
+                    // Update the 'page' parameter with the grid's current page
+                    href = href.replace(/page=([^&]*)/, 'page=' + requestObject.page || '~');
+
+                    // Update the 'sort' parameter with the grid's current sort descriptor
+                    href = href.replace(/sort=([^&]*)/, 'sort=' + requestObject.sort || '~');
+
+                    // Update the 'pageSize' parameter with the grid's current pageSize
+                    href = href.replace(/pageSize=([^&]*)/, 'pageSize=' + grid.dataSource._pageSize);
+
+                    //update filter descriptor with the filters applied
+
+                    href = href.replace(/filter=([^&]*)/, 'filter=' + (requestObject.filter || '~'));
+
+                    // Update the 'href' attribute
+                    $exportLink.attr('href', href);
+                }
+            }
+        }
+
+        function onSelect(e) {
+            $.each(e.files, function (index, value) {
+
+                if (value.extension != ".csv") {
+                    e.preventDefault();
+                    alert("Please upload CSV files only.");
+                }
+            });
+        }
+
+        function searchItems(campaignId) {
+
+            var searchValue = $('#searchBox').val();
+            var campaignGrid = "ProductItemsGrid_" + campaignId;
+            var grid = $('#'+campaignGrid).data('kendoGrid');
+
+            grid.dataSource.filter({
+                logic: "or",
+                filters:[
+                    {
+                        field: "ItemCode",
+                        operator: "eq",
+                        value: searchValue
+                    },
+                    {
+                        field: "Description",
+                        operator: "contains",
+                        value: searchValue
+                    },
+                    {
+                        field: "VendorCode",
+                        operator: "contains",
+                        value: searchValue
+                    }
+                ]
+            });
+        }
+
+        function resetItems(campaignId) {
+            $('#searchBox').val('');
+
+            var campaignGrid = "ProductItemsGrid_" + campaignId;
+            var grid = $('#'+campaignGrid).data('kendoGrid');
+            grid.dataSource.filter({});
+        }
+
+    </script>
+</div>

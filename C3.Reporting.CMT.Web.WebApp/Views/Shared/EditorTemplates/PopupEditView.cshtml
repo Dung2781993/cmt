@@ -1,0 +1,19 @@
+﻿@model C3.Reporting.CMT.Web.WebApp.Models.CampaignViewModel
+
+<fieldset>
+    <legend>DropDownLists:</legend>
+    <dl>
+        <dt>
+            @Html.LabelFor(m => m.RedemptionCodeId): 
+        </dt>
+        <dd>
+            @(Html.Kendo().DropDownListFor(m => m.RedemptionCodeId)
+                  .AutoBind(false)
+                  .DataTextField("OfferCode")
+                  .DataValueField("RedemptionCodeId")
+                  .DataSource(dataSource => dataSource.Read(read => read.Action("RedemptionCode", "RedemptionCode")).ServerFiltering(false))
+            )
+            @Html.ValidationMessageFor(m => m.RedemptionCodeId)
+        </dd>
+    </dl>
+</fieldset>

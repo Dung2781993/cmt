@@ -1,0 +1,12 @@
+﻿@using C3.Reporting.CMT.Web.WebApp.Models
+
+    @(Html.Kendo().DropDownListFor(m => m.RedemptionCodeId)
+        .Name("RedemptionCodeId") // Name of the widget should be the same as the name of the property
+        .DataValueField("RedemptionCodeId") // The value of the dropdown is taken from the EmployeeID property
+        .DataTextField("Description") // The text of the items is taken from the EmployeeName property
+        .BindTo((IEnumerable<RedemptionCodeModel>)ViewData["redemptionCodes"])
+        .SelectedIndex(219)
+     )
+
+
+

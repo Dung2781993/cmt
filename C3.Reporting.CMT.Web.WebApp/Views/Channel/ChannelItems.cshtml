@@ -1,0 +1,409 @@
+﻿@using C3.Reporting.CMT.Web.WebApp.Models
+@{
+    ViewBag.Title = "Segment Items";
+}
+
+<h2>Segment Items</h2>
+
+<h4>Active Segments</h4>
+
+@if (TempData["UploadResult"] != null)
+{
+    <p>@TempData["UploadResult"]</p>
+}
+@if (TempData["WarningResult"] != null)
+{
+    <p>@TempData["WarningResult"]</p>
+    <a href="@Url.Action("Download", "Channel")">Click here to download the Log File</a>
+}
+
+<div>
+    @(Html.Kendo().Grid<ChannelModel>()
+          .Name("ChannelGrid")
+          .Columns(columns =>
+              {
+                  columns.Bound(c => c.MasterCampaignId).Hidden();
+                  columns.ForeignKey(c => c.MasterCampaignId, new SelectList(ViewBag.Campaigns, "CampaignId", "BusinessFormat"))
+                         .Filterable(false).Title("Format");
+                  columns.ForeignKey(c => c.MasterCampaignId, new SelectList(ViewBag.Campaigns, "CampaignId", "CampaignName"))
+                         .Filterable(false).Title("Campaign Name");
+                  columns.Bound(c => c.ChannelCode).Title("Segment Code");
+                  columns.Bound(c => c.ChannelName).Title("Segment Name").Width(150);
+                  columns.ForeignKey(c => c.ChannelTypeId, new SelectList(ViewBag.ChannelTypes, "ChannelTypeId", "ChannelTypeName"))
+                         .Title("Segment Type");
+                  columns.Bound(c => c.Description).Width(250).Filterable(false);
+                  columns.Bound(c => c.SegStartDate).Format("{0:dd/MM/yyyy}");
+                  columns.Bound(c => c.SegEndDate).Format("{0:dd/MM/yyyy}");
+                  columns.ForeignKey(c => c.RedemptionCodeId, new SelectList(ViewBag.RedemptionCodes, "RedemptionCodeId", "Description"))
+                         .Title("Offer Code").Width(250);
+              })
+          .Pageable()
+          .Sortable()
+          .Filterable(filterable => filterable.Extra(false))
+          .Navigatable()
+          .ClientDetailTemplateId("SegmentItemTemplate")
+          .Scrollable(s => s.Height("auto"))
+          .HtmlAttributes(new { style = "font-size:12px" })
+          .DataSource(dataSource => dataSource
+                                        .Ajax()
+                                        .PageSize(20)
+                                        .Events(events => events.Error("error_handler"))
+                                        .Read(read => read.Action("Channel_Read", "Channel"))
+                                        .Model(model => model.Id(p => p.ChannelId))
+          )
+          .Selectable(selectable => selectable
+                                        .Mode(GridSelectionMode.Single))
+          .Resizable(resize => resize.Columns(true))
+          .Events(events => events.DetailExpand("detailExpand"))
+    )
+
+    <script id="SegmentItemTemplate" type="text/kendo-tmpl">
+        @(Html.Kendo().TabStrip()
+            .Name("tabStrip_#=ChannelId#")
+            .SelectedIndex(0)
+            .Items(tabStrip =>
+                {
+                    tabStrip.Add().Text("Add from Campaign Items")
+                        .Content(@<text>
+
+                    <div>
+                        <label class="search-label" for="searchBox">Search items that match these criteria :</label>
+                        <input type="search" id="searchBox" class="k-textbox" style="width: 500px" placeholder="Enter Item Code, Vendor or Description" />
+                        <input type="button" id="btnSearch" onClick="searchItems((#=ChannelId#))" class="k-button" value="Search" />
+                        <input type="button" id="btnReset" onClick="resetItems((#=ChannelId#))" class="k-button" value="Reset" />
+                    </div>
+
+                    <br />
+
+                    <div>
+                        @(Html.Kendo().Grid<CampaignItemModel>()
+                                        .Name("ItemsGrid_#=ChannelId#")
+                                        .Columns(columns =>
+                                        {
+                                            columns.Bound(c => c.ItemCode).Title("Item Code").Filterable(filter => filter.Extra(false));
+                                            columns.Bound(c => c.VendorCode).Filterable(filterable => filterable.Extra(false).UI("vendorFilter")).Title("Vendor");
+                                            columns.Bound(c => c.Description).Title("Description").Filterable(filter => filter.Extra(false));
+                                            columns.Bound(c => c.DepartmentName).Filterable(filterable => filterable.Extra(false).UI("departmentFilter")).Title("Department");
+                                            columns.Bound(c => c.CategoryName).Filterable(filterable => filterable.Extra(false).UI("categoryFilter")).Title("Category");
+                                            columns.Bound(c => c.UnitPrice).Filterable(false).Title("AUD").Format("{0:c}");
+                                            columns.Bound(c => c.NzUnitPrice).Filterable(false).Title("NZD").Format("{0:c}");
+                                            columns.Bound(c => c.Lifestage).Filterable(filterable => filterable.Extra(false).UI("lifestageFilter")).Title("Lifestage"); ;
+                                            columns.Bound(c => c.LimitedEdition).Title("Limited Ed").Filterable(filter => filter.Extra(false));
+                                            columns.Bound(c => c.LaunchDate).Format("{0:dd/MM/yyyy}").Title("Launch Date");
+                                            columns.Bound(c => c.TerminationDate).Format("{0:dd/MM/yyyy}").Title("Termination Date");
+                                            columns.Bound(c => c.RangingCodeMecca).Title("Mecca").Filterable(filter => filter.Extra(false));
+                                            columns.Bound(c => c.RangingCodeMaxima).Title("Maxima").Filterable(filter => filter.Extra(false));
+                                            columns.Bound(c => c.RangingCodeImo).Title("AU Online").Filterable(filter => filter.Extra(false));
+                                            columns.Bound(c => c.CompanySoh).Title("Cmpy Soh").Filterable(filter => filter.Extra(false));
+                                        })
+                                        .DataSource(dataSource => dataSource
+                                            .Ajax()
+                                            .PageSize(15)
+                                            .Read(read => read.Action("CampaignItems_SegmentRead", "Channel", new { campaignId = "#=MasterCampaignId#" }))
+                                            .Model(model =>
+                                            {
+                                                model.Id(p => p.ProductId);
+                                                model.Field(p => p.ProductId).Editable(false);
+                                            })
+                                        )
+                                        .Pageable()
+                                        .Sortable()
+                                        .Filterable()
+                                        .Selectable(selectable => selectable
+                                                          .Mode(GridSelectionMode.Multiple)
+                                                          .Type(GridSelectionType.Row))
+                                        .Resizable(resize => resize.Columns(true))
+                                        .ColumnMenu()
+                                        .ToClientTemplate()
+                        )
+
+                        <input type="button" class="k-button" value="Add Selected" onClick="addItems(#=ChannelId#)" />
+                    </div>
+
+                        </text>
+                        );
+                    tabStrip.Add().Text("Segment Items")
+                            .Content(@<text>
+                    @(Html.Kendo().Grid<ChannelProductItemModel>()
+                                .Name("SegmentItemsGrid_#=ChannelId#")
+                                .Columns(columns =>
+                                {
+                                    columns.Bound(c => c.ItemCode).Title("Item Code").Filterable(filter => filter.Extra(false));
+                                    columns.Bound(c => c.Description).Title("Description").Filterable(false);
+                                    columns.Bound(c => c.VendorCode).Title("Vendor");
+                                    columns.Bound(c => c.DepartmentName).Filterable(false);
+                                    columns.Bound(c => c.CategoryName).Filterable(false);
+                                    columns.Bound(c => c.UnitPrice).Title("AUD").Format("{0:c}").Filterable(false);
+                                    columns.Bound(c => c.NzUnitPrice).Title("NZD").Format("{0:c}").Filterable(false);
+                                    columns.Bound(c => c.Lifestage).Filterable(false);
+                                    columns.Bound(c => c.LimitedEdition).Title("Limited Ed").Filterable(false);
+                                    columns.Bound(c => c.LaunchDate).Format("{0:dd/MM/yyyy}").Title("Launch Date").Filterable(false);
+                                    columns.Bound(c => c.RangingCodeMecca).Title("Mecca").Filterable(false).Hidden();
+                                    columns.Bound(c => c.RangingCodeMaxima).Title("Maxima").Filterable(false).Hidden();
+                                    columns.Bound(c => c.RangingCodeImo).Title("AU Online").Filterable(false).Hidden();
+                                    columns.Bound(c => c.CompanySoh).Title("Cmpy Soh").Filterable(false);
+                                    columns.Bound(c => c.TesterMerchQty).Filterable(false);
+                                    columns.Bound(c => c.LiveMerchQty).Filterable(false);
+                                    columns.Bound(c => c.SampleQty).Filterable(false);
+                                    columns.Bound(c => c.NumStores).Filterable(false);
+                                    columns.Bound(c => c.Comments).Filterable(false);
+                                    columns.Command(command => command.Edit());
+
+                                })
+                                .DataSource(dataSource => dataSource
+                                    .Ajax()
+                                    .PageSize(10)
+                                    .Read(read => read.Action("SegmentItems_Read", "Channel", new { channelId = "#=ChannelId#" }))
+                                    .Update("SegmentItems_Update", "Channel")
+                                    .Model(model =>
+                                    {
+                                        model.Id(p => p.ChannelItemId);
+                                        model.Field(p => p.ChannelId).Editable(false);
+                                        model.Field(p => p.ProductId).Editable(false);
+                                    })
+                                )
+                                .Pageable(pager => pager.PageSizes(new[] { 10, 20, 100 }))
+                                .Pageable(pager => pager.Refresh(true).Messages(messages => messages.Refresh("Click to refresh")))
+                                .Sortable()
+                                .Selectable(selectable => selectable
+                                                  .Mode(GridSelectionMode.Multiple)
+                                                  .Type(GridSelectionType.Row))
+                                .Editable(editable => editable.Mode(GridEditMode.InLine))
+                                .Filterable()
+                                .Resizable(resize => resize.Columns(true))
+                                .ToolBar(toolBar =>
+                                           toolBar.Custom()
+                                                  .Text("Export To CSV")
+                                                  .HtmlAttributes(new { id = "export_channelItems" })
+                                                  .Url(Url.Action("Export", "Channel", new { channelId = "#=ChannelId#" }))
+                                )
+                                .ColumnMenu()
+                                .ToClientTemplate()
+                    )
+
+                    <input type="button" class="k-button" value="Remove Selected" onClick="removeItems(#=ChannelId#)" />
+                            </text>
+                            );
+                    tabStrip.Add().Text("Upload Segment Items").Content(
+                        @<text>
+                            <div>
+                                <form action="/Channel/UploadSegmentItems?ChannelId=#=ChannelId#" enctype="multipart/form-data" id="form0" method="post" novalidate="novalidate">
+                                    @(Html.Kendo().Upload().Multiple(false)
+                              .Name("uploadFiles")
+                              .Events(events => events.Select("onSelect"))
+                              .ToClientTemplate()
+                                    )
+                                    <input type="submit" class="k-button" value="Submit" />
+                                </form>
+
+                            </div>
+                        </text>
+                        );
+                })
+                                       .ToClientTemplate()
+        )
+    </script>
+
+    <script>
+        var expandedRow;
+
+        function error_handler(e) {
+            if (e.errors) {
+                var message = "Errors:\n";
+                $.each(e.errors, function (key, value) {
+                    if ('errors' in value) {
+                        $.each(value.errors, function () {
+                            message += this + "\n";
+                        });
+                    }
+                });
+                alert(message);
+            }
+        }
+
+        function onSelect(e) {
+            $.each(e.files, function (index, value) {
+                if (value.extension != ".csv") {
+                    e.preventDefault();
+                    alert("Please upload CSV files only.");
+                }
+            });
+        }
+
+
+        function detailExpand(e) {
+            var grid = $('#ChannelGrid').data('kendoGrid');
+            // Only one open at a time
+            if (expandedRow != null && expandedRow[0] != e.masterRow[0]) {
+                grid.collapseRow(expandedRow);
+            }
+            expandedRow = e.masterRow;
+            grid.select(expandedRow);
+        }
+
+        function businessFilter(element) {
+            element.kendoDropDownList({
+                dataSource: {
+                    transport: {
+                        read: "@Url.Action("FilterMenuCustomization_Business","Channel")"
+                    }
+                },
+                optionLabel: "--Select Business--"
+            });
+        }
+
+        function vendorFilter(element) {
+            element.kendoDropDownList({
+                dataSource: {
+                    transport: {
+                        read: "@Url.Action("FilterMenuCustomization_Vendor","Channel")"
+                    }
+                },
+                optionLabel: "--Select Vendor--"
+            });
+        }
+
+        function departmentFilter(element) {
+            element.kendoAutoComplete({
+                dataSource: {
+                    transport: {
+                        read: "@Url.Action("FilterMenuCustomization_Department","Channel")"
+                    }
+                }
+            });
+        }
+
+        function categoryFilter(element) {
+            element.kendoAutoComplete({
+                dataSource: {
+                    transport: {
+                        read: "@Url.Action("FilterMenuCustomization_Category","Channel")"
+                    }
+                }
+            });
+        }
+
+        function lifestageFilter(element) {
+            element.kendoDropDownList({
+                dataSource: {
+                    transport: {
+                        read: "@Url.Action("FilterMenuCustomization_Lifestage","Channel")"
+                    }
+                },
+                optionLabel: "--Select Lifestage--"
+            });
+        }
+
+        function addItems(channelId) {
+            var selectedGrid = "ItemsGrid_" + channelId;
+
+            var grid = $('#' + selectedGrid).data('kendoGrid');
+
+            var rows = grid.select();
+            rows.each(function (index, row) {
+                var selectedItem = grid.dataItem(row);
+
+                var postData = { channelId: channelId, productId: selectedItem.ProductId };
+
+                $.ajax({
+                    url: '@Url.Action("AddChannelItem")',
+                    type: 'POST',
+                    data: postData,
+                    cache: false,
+                    success: function (result) {
+                    }
+                });
+                
+                var segmentGrid = "SegmentItemsGrid_" + channelId;
+                $('#' + segmentGrid).data("kendoGrid").dataSource.read();
+            });
+        }
+
+        function removeItems(channelId) {
+            var segmentGrid = "SegmentItemsGrid_" + channelId;
+
+            var grid = $('#' + segmentGrid).data('kendoGrid');
+            var rows = grid.select();
+
+            var r = confirm("Are you sure you want to remove these items from this segment?");
+            if (r == true) {
+                rows.each(function (index, row) {
+                    var selectedItem = grid.dataItem(row);
+                    var postData = { channelId: channelId, productId: selectedItem.ProductId };
+
+                    $.ajax({
+                        url: '@Url.Action("DeleteSegmentItem")',
+                        type: 'GET',
+                        data: postData,
+                        cache: false,
+                        success: function (result) {
+                            alert("Item(s) removed.");
+                        }
+                    });
+                });
+                $('#' + segmentGrid).data("kendoGrid").dataSource.read();
+            }
+        }
+
+        function clearFiter() {
+            $("form.k-filter-menu button[type='reset']").trigger("click");
+        }
+
+        function searchItems(channelId) {
+
+            var searchValue = $('#searchBox').val();
+            var channelGrid = "ItemsGrid_" + channelId;
+            var grid = $('#'+channelGrid).data('kendoGrid');
+
+            grid.dataSource.filter({
+                logic: "or",
+                filters:[
+                    {
+                        field: "ItemCode",
+                        operator: "eq",
+                        value: searchValue
+                    },
+                    {
+                        field: "Description",
+                        operator: "contains",
+                        value: searchValue
+                    },
+                    {
+                        field: "VendorCode",
+                        operator: "contains",
+                        value: searchValue
+                    }
+                ]
+            });
+        }
+
+        function resetItems(channelId) {
+            $('#searchBox').val('');
+
+            var channelGrid = "ItemsGrid_" + channelId;
+            var grid = $('#'+channelGrid).data('kendoGrid');
+            grid.dataSource.filter({});
+        }
+
+    </script>
+
+    <style scoped>
+        .demo-section {
+            width: 500px;
+            text-align: center;
+        }
+
+        .demo-section .k-dropdown {
+            text-align: left;
+        }
+
+        .console {
+            margin: 0;
+        }
+
+        .k-tabstrip .k-content {
+            margin-top: 10px;
+        }
+
+        </style > </div >
+    

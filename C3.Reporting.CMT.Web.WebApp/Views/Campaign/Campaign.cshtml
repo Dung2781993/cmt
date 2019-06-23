@@ -1,0 +1,482 @@
+﻿@using System.Collections
+@using C3.Reporting.CMT.Web.WebApp.Models
+@using Kendo.Mvc.UI
+@model IEnumerable<CampaignViewModel>
+
+@{
+    ViewBag.Title = "Campaign Management";
+}
+
+<script src="https://kendo.cdn.telerik.com/2017.1.223/js/kendo.all.min.js"></script>
+
+<h2>Campaign Management</h2>
+
+<h4>My Campaigns</h4>
+<div>
+
+    @(Html.Kendo().Grid<CampaignViewModel>()
+          .Name("CampaignGrid")
+          .Columns(columns =>
+          {
+              columns.Bound(c => c.BusinessFormat).EditorTemplateName("BusinessFormatEditor").Filterable(filterable => filterable.UI("businessFilter")).Title("Format");
+              columns.Bound(c => c.CampaignCode).Filterable(filterable => filterable.UI("campaignCodeFilter"));
+              columns.Bound(c => c.CampaignName).Width(150);
+              columns.ForeignKey(c => c.CampaignTypeId, (IEnumerable)ViewBag.CampaignTypes, "CampaignTypeId", "CampaignTypeName").Title("Campaign Type").Width(150);
+              columns.Bound(c => c.Description).Width(200);
+              columns.Bound(c => c.StartDate).Format("{0:dd/MM/yyyy}");
+              columns.Bound(c => c.EndDate).Format("{0:dd/MM/yyyy}");
+              columns.ForeignKey(c => c.StoreOptionId, (IEnumerable)ViewBag.StoreOption, "StoreOptionId", "StoreOptionName").Filterable(filterable => filterable.UI("storeOptionFilter")).Title("Store Option").Width(150);
+              columns.ForeignKey(c => c.RedemptionCodeId, (IEnumerable)ViewBag.RedemptionCodes, "RedemptionCodeId", "Description").Title("Offer Code").Width(200);
+              columns.Command(command => command.Custom("Assign").Click("openOfferCodeWin")).Title("Set Offer");
+              columns.Bound(c => c.IsLocked).ClientTemplate("<input type='checkbox' name='IsLockedCb' #= IsLocked? 'checked' : '' # disabled/> ");
+              columns.Command(command => command.Edit()).Title("Commands");
+          })
+          .ToolBar(toolbar => toolbar.Create().Text("Add new Campaign"))
+          .Editable(editable => editable.Mode(GridEditMode.InLine))
+          .Pageable(pager => pager.Refresh(true).Messages(messages => messages.Refresh("Click to refresh")))
+          .Scrollable(s => s.Height("auto"))
+          .Filterable(filterable => filterable.Extra(false))
+          .Sortable()
+          .Navigatable()
+          .ClientDetailTemplateId("CampaignStoreTemplate")
+          .HtmlAttributes(new { style = "font-size:12px" })
+          .DataSource(dataSource => dataSource
+                                        .Ajax()
+                                        .PageSize(10)
+                                        .Events(events => events.Error("error_handler"))
+                                        .Model(model =>
+                                        {
+                                            model.Id(p => p.CampaignId);
+                                            model.Field(p => p.CampaignId).Editable(false);
+                                            model.Field(p => p.CampaignCode).Editable(false);
+                                        })
+                                        .Create(update => update.Action("MyCampaign_Create", "Campaign"))
+                                        .Read(read => read.Action("MyCampaigns_Read", "Campaign").Type(HttpVerbs.Post))
+                                        .Update(update => update.Action("MyCampaign_Update", "Campaign"))
+          )
+          .AutoBind(true)
+          .Selectable(selectable => selectable.Mode(GridSelectionMode.Single))
+          .Resizable(resize => resize.Columns(true))
+          .Events(events => events.Edit("onEdit"))
+          .Events(events => events.DetailExpand("detailExpand"))
+    )
+
+
+
+    <h4>Other Campaigns</h4>
+    @(Html.Kendo().Grid<CampaignViewModel>()
+          .Name("OtherCampaignGrid")
+          .Columns(columns =>
+          {
+              columns.Bound(c => c.BusinessFormat).EditorTemplateName("BusinessFormatEditor").Filterable(filterable => filterable.UI("businessFilter")).Title("Format");
+              columns.Bound(c => c.CampaignCode).Filterable(filterable => filterable.UI("campaignCodeFilter"));
+              columns.Bound(c => c.CampaignName).Width(150);
+              columns.ForeignKey(c => c.CampaignTypeId, (IEnumerable)ViewBag.CampaignTypes, "CampaignTypeId", "CampaignTypeName")
+                  .Title("Campaign Type");
+              columns.Bound(c => c.Description).Width(250);
+              columns.Bound(c => c.StartDate).Format("{0:dd/MM/yyyy}");
+              columns.Bound(c => c.EndDate).Format("{0:dd/MM/yyyy}");
+              columns.ForeignKey(c => c.StoreOptionId, (IEnumerable)ViewBag.StoreOption, "StoreOptionId", "StoreOptionName").Filterable(filterable => filterable.UI("storeOptionFilter")).Title("Store Option").Width(150);
+              columns.ForeignKey(c => c.RedemptionCodeId, (IEnumerable)ViewBag.RedemptionCodes, "RedemptionCodeId", "Description")
+                  .Title("Offer Code").Width(250);
+              columns.Bound(c => c.CreatedBy).Title("Created By");
+              columns.Command(command => command.Edit()).Title("Commands");
+          })
+          .Editable(editable => editable.Mode(GridEditMode.InLine))
+          .Pageable()
+          .Scrollable(s => s.Height("auto"))
+          .Filterable(filterable => filterable.Extra(false))
+          .Sortable()
+          .ClientDetailTemplateId("CampaignStoreTemplate")
+          .Navigatable()
+          .HtmlAttributes(new { style = "font-size:12px" })
+          .DataSource(dataSource => dataSource
+              .Ajax()
+              .PageSize(20)
+              .Events(events => events.Error("error_handler"))
+              .Model(model =>
+              {
+                  model.Id(p => p.CampaignId);
+                  model.Field(p => p.CampaignId).Editable(false);
+                  model.Field(p => p.CampaignCode).Editable(false);
+              })
+              .Read(read => read.Action("OtherCampaigns_Read", "Campaign"))
+              .Update(update => update.Action("OtherCampaign_Update", "Campaign"))
+          )
+          .AutoBind(true)
+          .Selectable(selectable => selectable.Mode(GridSelectionMode.Single))
+          .Resizable(resize => resize.Columns(true))
+          .Events(events => events.Edit("otherOnEdit"))
+          .Events(events => events.DetailExpand("detailExpand"))
+    )
+
+
+    <div id="lookupWindow">
+        @(Html.Kendo().Grid<RedemptionCodeModel>()
+              .Name("gridOfferCodes")
+              .Columns(columns =>
+              {
+                  columns.Bound(c => c.OfferCode).Filterable(filterable => filterable.UI("offerCodeFilter"));
+                  columns.Bound(c => c.Description);
+              })
+              .DataSource(dataSource => dataSource
+                  .Ajax()
+                  .PageSize(15)
+                  .Model(model => model.Id(m => m.RedemptionCodeId))
+                  .Read(up => up.Action("OfferCode_Read", "Campaign"))
+              )
+              .Pageable()
+              .Sortable()
+              .Filterable(filterable => filterable.Extra(false))
+              .Selectable(s => s.Mode(GridSelectionMode.Single))
+              .Resizable(resize => resize.Columns(true))
+              .Navigatable()
+              .HtmlAttributes(new { style = "font-size:12px" })
+        )
+        <button type="button" id="selectOffer" onclick="setOfferToCampaign()" class="k-button">Assign</button>
+        <button type="button" id="cancelOffer" onclick="cancelOfferCode()" class="k-button">Cancel</button>
+    </div>
+
+
+</div>
+
+
+<script type="text/javascript">
+        var expandedRow;
+
+        $(document).ready(function () {
+            $("#lookupWindow").kendoWindow({
+                draggable: false,
+                height: "600px",
+                modal: true,
+                resizable: false,
+                title: "Offer Codes",
+                width: "600px",
+                visible: false
+            });
+
+
+        });
+
+        $(function () {
+            $('#gridOfferCodes').data().kendoGrid.one('dataBound', function (e) {
+                this.select(this.tbody.find('>tr:first'));
+            });
+        });
+
+        function error_handler(e) {
+            if (e.errors) {
+                var message = "Errors:\n";
+                $.each(e.errors, function (key, value) {
+                    if ('errors' in value) {
+                        $.each(value.errors, function () {
+                            message += this + "\n";
+                        });
+                    }
+                });
+                alert(message);
+
+                // Cancel the changes
+                var grid = $("#CampaignGrid").data("kendoGrid");
+                grid.cancelChanges();
+            }
+        }
+
+
+        function businessFilter(element) {
+            element.kendoDropDownList({
+                dataSource: {
+                    transport: {
+                        read: "@Url.Action("FilterMenuCustomization_Business")"
+                    }
+                },
+                optionLabel: "--Select Business--"
+            });
+        }
+
+        function storeOptionFilter(element) {
+            element.kendoDropDownList({
+                dataSource: {
+                    transport: {
+                        read: "@Url.Action("FilterMenuCustomization_StoreOption")"
+                    }
+                },
+                optionLabel: "--Select StoreOption--"
+            });
+        }
+
+        function campaignCodeFilter(element) {
+            element.kendoAutoComplete({
+                dataSource: {
+                    transport: {
+                        read: "@Url.Action("FilterMenuCustomization_CampaignCode")"
+                    }
+                }
+            });
+        }
+
+        function offerCodeFilter(element) {
+            element.kendoAutoComplete({
+                dataSource: {
+                    transport: {
+                        read: "@Url.Action("FilterMenuCustomization_OfferCode")"
+                    }
+                }
+            });
+        }
+
+
+        function storeFilter(element) {
+            element.kendoAutoComplete({
+                dataSource: {
+                    transport: {
+                        read: "@Url.Action("FilterMenuCustomization_Store")"
+                    }
+                }
+            });
+        }
+
+        function businessNameFilter(element) {
+            element.kendoAutoComplete({
+                dataSource: {
+                    transport: {
+                        read: "@Url.Action("FilterMenuCustomization_BusinessName")"
+                    }
+                }
+            });
+        }
+
+        //Create client campaign template
+        function detailExpand(e) {
+            var grid = $('#CampaignGrid').data('kendoGrid');
+            // Only one open at a time
+            if (expandedRow != null && expandedRow[0] != e.masterRow[0]) {
+                grid.collapseRow(expandedRow);
+            }
+            expandedRow = e.masterRow;
+            grid.select(expandedRow);
+        }
+
+
+</script>
+
+<script type="text/javascript">
+    
+
+    function onEdit(e) {
+        if (e.model.isNew()) {
+            $("#CampaignGrid tbody [data-role=dropdownlist]").each(function() {
+                var ddl = $(this).data("kendoDropDownList");
+                if (ddl) {
+                    ddl.options.optionLabel = "Please Select:";
+                    ddl.refresh();
+                    ddl.value("");
+                }
+            });
+
+            // Disable the Assign button on add campaign
+            $("#CampaignGrid .k-grid-content")
+                .find(".k-grid-Assign")
+                .addClass("k-state-disabled")
+                .bind("click",
+                    function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                    });
+        }
+    }
+
+    function otherOnEdit(e) {
+        if (e.model.isNew()) {
+            $("#OtherCampaignGrid tbody [data-role=dropdownlist]").each(function () {
+                var ddl = $(this).data("kendoDropDownList");
+                if (ddl) {
+                    ddl.options.optionLabel = "Please Select:";
+                    ddl.refresh();
+                    ddl.value("");
+                }
+            });
+        }
+    }
+
+    function openOfferCodeWin() {
+        var win = $("#lookupWindow").data("kendoWindow");
+        win.center();
+        win.open();
+    }
+
+
+
+
+    function cancelOfferCode() {
+        var win = $("#lookupWindow").data("kendoWindow");
+        win.close();
+    }
+
+    //Set Offers to Campaign
+    function setOfferToCampaign() {
+        var selectedCampaign;
+
+        var campaignGrid = $('#CampaignGrid').data('kendoGrid');
+        var campaignRows = campaignGrid.select();
+        campaignRows.each(function (index, row) {
+            var selectedItem = campaignGrid.dataItem(row);
+
+            selectedCampaign = selectedItem.CampaignId;
+        });
+
+        var grid = $('#gridOfferCodes').data('kendoGrid');
+        var rows = grid.select();
+        //var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        rows.each(function (index, row) {
+            var selectedItem = grid.dataItem(row);
+
+            var postData = { campaignId: selectedCampaign, redemptionCodeId: selectedItem.RedemptionCodeId };
+
+            $.ajax({
+                url: '@Url.Action("SetCampaignOffer")',
+                type: 'POST',
+                data: postData,
+                cache: false,
+                success: function(result) {
+                }
+            });
+        });
+
+        var win = $("#lookupWindow").data("kendoWindow");
+        win.close();
+        $('#CampaignGrid').data("kendoGrid").dataSource.read();
+        $('#CampaignGrid').data("kendoGrid").refresh();
+    }
+
+    //Set Stores to Campaign
+    function setStoreToCampaign(campaignId) {
+        var campaignSelected = $('#CampaignGrid').data('kendoGrid');
+        var campaignRows = campaignSelected.select();
+        var storeOptionSelected;
+        campaignRows.each(function (index, row) {
+            var selectedItem = campaignSelected.dataItem(row);
+            storeOptionSelected = selectedItem.StoreOptionId;
+        });
+        if (storeOptionSelected === 1) {
+            kendo.alert("The store option is set to 'all stores'. Please change the store options to 'selected stores' to add stores to campaign.");
+        } else {
+            var selectedGruid = "CampaignStoreGrid_" + campaignId;
+            var grid = $('#' + selectedGruid).data('kendoGrid');
+            var rows = grid.select();
+
+            rows.each(function(index, row) {
+                var selectedItem = grid.dataItem(row);
+                var postData = { campaignId: campaignId, storeId: selectedItem.StoreId, campaignStoreId: selectedItem.CampaignStoreId, IsSelected: selectedItem.IsSelected};
+                $.ajax({
+                    url: '@Url.Action("ActivateCampaignStore")',
+                    type: 'POST',
+                    data: postData,
+                    cache: false,
+                    success: function(result) {
+                    }
+                });
+
+                var campaignGrid = "CampaignStoreGrid_" + campaignId;
+                $('#' + campaignGrid).data("kendoGrid").dataSource.fetch();
+            }); 
+        }        
+    }
+
+    //Remove Store in Campaign
+    function removeStores(campaignId) {
+
+        var campaignSelected = $('#CampaignGrid').data('kendoGrid');
+        var campaignRows = campaignSelected.select();
+        var storeOptionSelected;
+        campaignRows.each(function (index, row) {
+            var selectedItem = campaignSelected.dataItem(row);
+            storeOptionSelected = selectedItem.StoreOptionId;
+        });
+        if (storeOptionSelected === 1) {
+            kendo.alert("The store option is set to 'all stores'. Please change the store options to 'selected stores' to remove stores.");
+        } else {
+            var selectedGruid = "CampaignStoreGrid_" + campaignId;
+            var grid = $('#' + selectedGruid).data('kendoGrid');
+            var rows = grid.select();
+            var itemCounter = 0;
+
+            var r = confirm("Are you sure you want to remove these stores from this campaign?");
+            if (r === true) {
+                rows.each(function (index, row)
+                {
+                    var selectedItem = grid.dataItem(row);
+                    var postData = { campaignId: campaignId, storeId: selectedItem.StoreId };    
+                    itemCounter++;
+                    $.ajax({
+                        url: '@Url.Action("DeleteCampaignStore")',
+                        type: 'Post',
+                        data: postData,
+                        cache: false,
+                        async: false,
+                        success: function (result) {
+                        }
+                    });
+                });
+
+                $('#' + selectedGruid).data("kendoGrid").dataSource.read();
+            }
+        }
+    }
+
+</script>
+
+
+<script id="CampaignStoreTemplate" type="text/kendo-tmpl">
+    @(Html.Kendo().TabStrip()
+          .Name("tabStrip_#=CampaignId#")
+          .SelectedIndex(0)
+          .Items(tabStrip =>
+          {
+              tabStrip.Add().Text("Store List")
+                  .Content(
+                      @<text>
+                    <div id="campaignStore_#=CampaignId#">
+                        @(Html.Kendo().Grid<CampaignStoreModel>()
+                              .Name("CampaignStoreGrid_#=CampaignId#")
+                              .Columns(columns =>
+                              {
+                                  columns.Bound(c => c.StoreCode).Title("Store Code").Filterable(filter => filter.Extra(false));
+                                  columns.Bound(c => c.StoreName).Title("Store Name").Filterable(filter => filter.Extra(false));
+                                  columns.Bound(c => c.BusinessName).Title("Business Name").Filterable(filter => filter.Extra(false).UI("businessNameFilter"));
+                                  columns.Bound(c => c.OpenDate).Format("{0:dd/MM/yyyy}");
+                                  columns.Bound(c => c.IsSelected).ClientTemplate("<input type='checkbox'  disabled \\#=IsSelected ? 'checked' : ''  \\# /> ");
+                              })
+                              .DataSource(dataSource => dataSource
+                                  .Ajax()
+                                  .PageSize(20)
+                                  .Read(read => read.Action("CampaignStores_Read", "Campaign", new {campaignId = "#=CampaignId#"}))
+                                  .Model(model =>
+                                  {
+                                      model.Id(p => p.CampaignId);
+                                      model.Field(p => p.CampaignStoreId).Editable(false);
+                                  })
+                              )
+                              .Pageable(pager => pager.PageSizes(new[] {10, 20, 100}))
+                              .Pageable(pager => pager.Refresh(true).Messages(messages => messages.Refresh("Click to refresh")))
+                              .Sortable()
+                              .Filterable()
+                              .Selectable(selectable => selectable
+                                  .Mode(GridSelectionMode.Multiple)
+                                  .Type(GridSelectionType.Row))
+                              .Resizable(resize => resize.Columns(true))
+                              .HtmlAttributes(new {style = "font-size:12px"})
+                              .ToClientTemplate()
+                              )
+                        <br />
+                        <button type="button" id="RemoveStore" onclick="removeStores(#=CampaignId#)" class="k-button">Remove Store</button>
+                        <button type="button" id="SetStore" onclick="setStoreToCampaign(#=CampaignId#)" class="k-button">Select Store</button>
+                    </div>
+                
+                       </text>
+                  );
+          }).ToClientTemplate()
+          )
+
+</script>
+

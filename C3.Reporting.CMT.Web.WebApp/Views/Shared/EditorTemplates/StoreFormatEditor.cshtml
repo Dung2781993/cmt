@@ -1,0 +1,8 @@
+﻿
+
+@(Html.Kendo().DropDownList()
+    .Name("StoreOptionId")
+    .DataValueField("StoreOptionId")
+    .DataTextField("Name")
+    .DataSource(source => source.Read(read => read.Action("StoreOption_Read", "Campaign")))
+)

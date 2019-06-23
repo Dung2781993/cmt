@@ -1,0 +1,7 @@
+﻿@model DateTime?
+
+@(Html.Kendo().DatePickerFor(m => m)
+    .Culture("en-GB")
+    .Name("StartDate")
+    //.Events(e => e.Change("startChange"))
+ )

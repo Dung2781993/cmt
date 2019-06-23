@@ -1,0 +1,34 @@
+﻿Campaign ID: @Model
+
+@(Html.Kendo().TreeView()
+      .Name("treeview-left")
+      //.HtmlAttributes(new {@class="demo-section" })
+      .DataTextField("Owner")
+      .Checkboxes(checkboxes => checkboxes.CheckChildren(true))
+      .DataSource(dataSource => dataSource.Read(read => read.Action("GetOwners", "Campaign", new { campaignId = @Model })))
+ )
+              
+@(Html.Kendo().TreeView()
+        .Name("treeview-right")
+        .Checkboxes(checkboxes => checkboxes.CheckChildren(true))
+        .Items(treeview =>
+        {
+            treeview.Add().Text("Storage")
+                .Expanded(true)
+                .Items(furniture =>
+                {
+                    furniture.Add().Text("Wall Shelving");
+                    furniture.Add().Text("Floor Shelving");
+                    furniture.Add().Text("Kids Storage");
+                });
+
+            treeview.Add().Text("Lights")
+                .Expanded(true)
+                .Items(furniture =>
+                {
+                    furniture.Add().Text("Ceiling");
+                    furniture.Add().Text("Table");
+                    furniture.Add().Text("Floor");
+                });
+        })
+    )

@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2C5D5814-E460-42D7-AE92-31F294812C9D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>C3.Reporting.CMT.Business.Entities</RootNamespace>
+    <AssemblyName>C3.Reporting.CMT.Business.Entities</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="SD.LLBLGen.Pro.ORMSupportClasses, Version=4.1.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Program Files (x86)\Solutions Design\LLBLGen Pro v4.1\Frameworks\LLBLGen Pro\RuntimeLibraries\CompiledRuntimeLibraries\SD.LLBLGen.Pro.ORMSupportClasses.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BaseDataEntity.cs" />
+    <Compile Include="BaseEntity.cs" />
+    <Compile Include="BaseEntityCollection.cs" />
+    <Compile Include="Campaign.cs" />
+    <Compile Include="CampaignItem.cs" />
+    <Compile Include="CampaignItemSet.cs" />
+    <Compile Include="CampaignOwner.cs" />
+    <Compile Include="CampaignOwnerSet.cs" />
+    <Compile Include="CampaignSet.cs" />
+    <Compile Include="CampaignStore.cs" />
+    <Compile Include="CampaignStoreSet.cs" />
+    <Compile Include="CampaignType.cs" />
+    <Compile Include="CampaignTypeSet.cs" />
+    <Compile Include="Channel.cs" />
+    <Compile Include="ChannelCustomer.cs" />
+    <Compile Include="ChannelCustomerSet.cs" />
+    <Compile Include="ChannelItem.cs" />
+    <Compile Include="ChannelItemSet.cs" />
+    <Compile Include="ChannelOwner.cs" />
+    <Compile Include="ChannelOwnerSet.cs" />
+    <Compile Include="ChannelSet.cs" />
+    <Compile Include="ChannelStore.cs" />
+    <Compile Include="ChannelStoreSet.cs" />
+    <Compile Include="ChannelType.cs" />
+    <Compile Include="ChannelTypeSet.cs" />
+    <Compile Include="ProductItem.cs" />
+    <Compile Include="ProductItemSet.cs" />
+    <Compile Include="RedemptionCodeSet.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RedemptionCode.cs" />
+    <Compile Include="Store.cs" />
+    <Compile Include="StoreOption.cs" />
+    <Compile Include="StoreOptionTypeSet.cs" />
+    <Compile Include="StoreSet.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\C3.Reporting.CMT.Core.Caching\C3.Reporting.CMT.Core.Caching.csproj">
+      <Project>{6d33e143-ac64-4594-953f-1267c037f72b}</Project>
+      <Name>C3.Reporting.CMT.Core.Caching</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\C3.Reporting.CMT.Core\C3.Reporting.CMT.Core.csproj">
+      <Project>{948d6061-68dc-4583-899e-5e47bd00bbd3}</Project>
+      <Name>C3.Reporting.CMT.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mecca.CMT.DAL\Mecca.CMT.DAL.csproj">
+      <Project>{f7ecc309-361c-4559-9fe5-625b1ef0e84b}</Project>
+      <Name>Mecca.CMT.DAL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

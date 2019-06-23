@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F96C0ED2-FA29-4E10-A13C-EF0496D67FD9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>C3.Reporting.CMT.Business.Services</RootNamespace>
+    <AssemblyName>C3.Reporting.CMT.Business.Services</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="SD.LLBLGen.Pro.ORMSupportClasses, Version=4.1.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Program Files (x86)\Solutions Design\LLBLGen Pro v4.1\Frameworks\LLBLGen Pro\RuntimeLibraries\CompiledRuntimeLibraries\SD.LLBLGen.Pro.ORMSupportClasses.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Exceptions\AuthenticationFailedException.cs" />
+    <Compile Include="Managers\CampaignItemManager.cs" />
+    <Compile Include="Managers\CampaignManager.cs" />
+    <Compile Include="Managers\CampaignOwnerManager.cs" />
+    <Compile Include="Managers\CampaignStoreManager.cs" />
+    <Compile Include="Managers\CampaignTypeManager.cs" />
+    <Compile Include="Managers\ChannelCustomerManager.cs" />
+    <Compile Include="Managers\ChannelItemManager.cs" />
+    <Compile Include="Managers\ChannelManager.cs" />
+    <Compile Include="Managers\ChannelOwnerManager.cs" />
+    <Compile Include="Managers\ChannelStoreManager.cs" />
+    <Compile Include="Managers\ChannelTypeManager.cs" />
+    <Compile Include="Managers\ProductItemManager.cs" />
+    <Compile Include="Managers\RedemptionCodeManager.cs" />
+    <Compile Include="Managers\StoreManager.cs" />
+    <Compile Include="Managers\StoreOptionManager.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceManagerProvider.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\C3.Reporting.CMT.Business.Entities\C3.Reporting.CMT.Business.Entities.csproj">
+      <Project>{2c5d5814-e460-42d7-ae92-31f294812c9d}</Project>
+      <Name>C3.Reporting.CMT.Business.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\C3.Reporting.CMT.Core.Caching\C3.Reporting.CMT.Core.Caching.csproj">
+      <Project>{6d33e143-ac64-4594-953f-1267c037f72b}</Project>
+      <Name>C3.Reporting.CMT.Core.Caching</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\C3.Reporting.CMT.Core\C3.Reporting.CMT.Core.csproj">
+      <Project>{948d6061-68dc-4583-899e-5e47bd00bbd3}</Project>
+      <Name>C3.Reporting.CMT.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mecca.CMT.DAL\Mecca.CMT.DAL.csproj">
+      <Project>{f7ecc309-361c-4559-9fe5-625b1ef0e84b}</Project>
+      <Name>Mecca.CMT.DAL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,507 @@
+﻿@using C3.Reporting.CMT.Web.WebApp.Models
+@using Kendo.Mvc.UI
+@{
+    ViewBag.Title = "Segments";
+}
+
+<script src="https://kendo.cdn.telerik.com/2017.1.223/js/kendo.all.min.js"></script>
+
+<h2>Segment Management</h2>
+
+<h4>All Available Campaigns</h4>
+<div>
+    @(Html.Kendo().Grid<CampaignViewModel>()
+          .Name("CampaignGrid")
+          .Columns(columns =>
+              {
+                  columns.Bound(c => c.BusinessFormat).EditorTemplateName("BusinessFormatEditor").Filterable(filterable => filterable.UI("businessFilter")).Title("Format");
+                  columns.Bound(c => c.CampaignCode).Filterable(filterable => filterable.UI("campaignCodeFilter"));
+                  columns.Bound(c => c.CampaignName).Width(150);
+                  columns.ForeignKey(c => c.CampaignTypeId, new SelectList(ViewBag.CampaignTypes, "CampaignTypeId", "CampaignTypeName"))
+                         .Title("Campaign Type");
+                  columns.Bound(c => c.Description).Width(250);
+                  columns.Bound(c => c.StartDate).Format("{0:dd/MM/yyyy}");
+                  columns.Bound(c => c.EndDate).Format("{0:dd/MM/yyyy}");
+                  columns.ForeignKey(c => c.RedemptionCodeId, new SelectList(ViewBag.RedemptionCodes, "RedemptionCodeId", "Description"))
+                         .Title("Offer Code").Width(250);
+              })
+          .Pageable()
+          .Sortable()
+          .Navigatable()
+          .Filterable(filterable => filterable.Extra(false))
+          .ClientDetailTemplateId("SegmentTemplate")
+          .HtmlAttributes(new { style = "font-size:12px" })
+          .DataSource(dataSource => dataSource
+                                        .Ajax()                    
+                                        .PageSize(20)
+                                        .Events(events => events.Error("error_handler"))            
+                                        .Read(read => read.Action("Campaign_Read", "Channel"))  
+                                        .Model(model => model.Id(p => p.CampaignId))
+          ) 
+          .Selectable(selectable => selectable
+                                        .Mode(GridSelectionMode.Single)) 
+          .Resizable(resize => resize.Columns(true))  
+          .Events(events => events.DetailExpand("detailExpand")) 
+          )
+    
+    <div id="lookupWindow">
+        @(Html.Kendo().Grid<RedemptionCodeModel>()
+              .Name("gridOfferCodes")
+              .Columns(columns =>
+                  {
+                      columns.Bound(c => c.OfferCode).Filterable(filterable => filterable.UI("offerCodeFilter"));
+                      columns.Bound(c => c.Description);
+                  })
+              .DataSource(dataSource => dataSource
+                                            .Ajax()                    
+                                            .PageSize(15)
+                                            .Model(model => model.Id(m => m.RedemptionCodeId))
+                                            .Read(up => up.Action("OfferCode_Read", "Campaign"))
+              )
+              .Pageable()
+              .Sortable()
+              .Filterable(filterable => filterable.Extra(false))
+              .Selectable(s => s.Mode(GridSelectionMode.Single))
+              .Resizable(resize => resize.Columns(true))
+              .Navigatable()
+              .HtmlAttributes(new { style = "font-size:12px" })
+              )
+        <button type="button" id="selectOffer" onclick="setOfferToSegment()" class="k-button">Assign</button>
+        <button type="button" id="cancelOffer" onclick="cancelOfferCode()" class="k-button">Cancel</button>
+    </div>
+
+    <script type="text/javascript">
+        var expandedRow;
+        var campaignSelected;
+
+        $(document).ready(function () {
+            $("#lookupWindow").kendoWindow({
+                draggable: false,
+                height: "600px",
+                modal: true,
+                resizable: false,
+                title: "Offer Codes",
+                width: "600px",
+                visible: false
+            });
+
+        });
+
+        $(function () {
+            $('#gridOfferCodes').data().kendoGrid.one('dataBound', function (e) {
+                this.select(this.tbody.find('>tr:first'));
+            });
+        });
+
+        function error_handler(e) {
+            if (e.errors) {
+                var message = "Errors:\n";
+                $.each(e.errors, function (key, value) {
+                    if ('errors' in value) {
+                        $.each(value.errors, function () {
+                            message += this + "\n";
+                        });
+                    }
+                });
+                // Display the message
+                alert(message);
+            }
+        }
+
+        function onEdit(e) {
+
+            if (e.model.isNew()) {
+                // Pull campaign start and end dates
+                var campaignGrid = $('#CampaignGrid').data('kendoGrid');
+                var row = campaignGrid.select();
+
+                if (row != null) {
+                    var selectedItem = campaignGrid.dataItem(row);
+
+                    if (selectedItem != null) {
+                        // Set new segment start and end date of selected campaign
+                        var startdatepicker = $("#SegStartDate").data("kendoDatePicker");
+                        var start = selectedItem.StartDate;
+
+                        var enddatepicker = $("#SegEndDate").data("kendoDatePicker");
+                        var end = selectedItem.EndDate;
+
+                        startdatepicker.value(start);
+                        enddatepicker.value(end);
+
+                        startdatepicker.trigger("change");
+                        enddatepicker.trigger("change");
+                    }
+
+                    var selectedCampaignId = campaignGrid.dataItem(row);
+
+                    if (selectedCampaignId != null) {
+                        var campaignId = selectedCampaignId.CampaignId;
+                        var segmentGrid = "ChannelGrid_" + campaignId;
+
+                        $("#" + segmentGrid + " tbody [data-role=dropdownlist]").each(function() {
+                            var ddl = $(this).data("kendoDropDownList");
+                            if (ddl) {
+                                ddl.options.optionLabel = "Please Select:";
+                                ddl.refresh();
+                                ddl.value("");
+                            }
+                        });
+
+                        var sGrid = $("#" + segmentGrid).data("kendoGrid");
+                        sGrid.hideColumn(7); // Hide the 'Assign' button on creating segment
+                    }
+                }
+            } else {
+                var parentDataItem = $('#CampaignGrid').data().kendoGrid.dataItem($(this.element).closest('.k-detail-row').prev('.k-master-row'));
+                var segGrid = $("#ChannelGrid_" + parentDataItem.CampaignId).data("kendoGrid");
+                segGrid.hideColumn(7); // Hide the 'Assign' column on edit
+            }
+        }
+
+        function onCancel(e) {
+            var parentDataItem = $('#CampaignGrid').data().kendoGrid.dataItem($(this.element).closest('.k-detail-row').prev('.k-master-row'));
+            var sGrid = $("#ChannelGrid_" + parentDataItem.CampaignId).data("kendoGrid");
+            sGrid.showColumn(7); // Display the 'Assign' column
+        }
+
+        function onSave(e) {
+            var parentDataItem = $('#CampaignGrid').data().kendoGrid.dataItem($(this.element).closest('.k-detail-row').prev('.k-master-row'));
+            var sGrid = $("#ChannelGrid_" + parentDataItem.CampaignId).data("kendoGrid");
+            sGrid.showColumn(7); // Display the 'Assign' column
+        }
+
+        function detailExpand(e) {
+            var grid = $('#CampaignGrid').data('kendoGrid');
+
+            // Only one open at a time
+            if (expandedRow != null && expandedRow[0] != e.masterRow[0]) {
+                grid.collapseRow(expandedRow);
+            }
+            expandedRow = e.masterRow;
+            grid.select(expandedRow);
+        }
+
+        function businessFilter(element) {
+            element.kendoDropDownList({
+                dataSource: {
+                    transport: {
+                        read: "@Url.Action("FilterMenuCustomization_Business")"
+                    }
+                },
+                optionLabel: "--Select Business--"
+            });
+        }
+
+        function campaignCodeFilter(element) {
+            element.kendoAutoComplete({
+                dataSource: {
+                    transport: {
+                        read: "@Url.Action("FilterMenuCustomization_CampaignCode")"
+                    }
+                }
+            });
+        }
+
+        function storeOptionFilter(element) {
+            element.kendoDropDownList({
+                dataSource: {
+                    transport: {
+                        read: "@Url.Action("FilterMenuCustomization_StoreOption")"
+                    }
+                },
+                optionLabel: "--Select StoreOption--"
+            });
+        }
+
+        function offerCodeFilter(element) {
+            element.kendoAutoComplete({
+                dataSource: {
+                    transport: {
+                        read: "@Url.Action("FilterMenuCustomization_OfferCode")"
+                    }
+                }
+            });
+        }
+
+        function businessNameFilter(element) {
+            element.kendoAutoComplete({
+                dataSource: {
+                    transport: {
+                        read: "@Url.Action("FilterMenuCustomization_BusinessName")"
+                    }
+                }
+            });
+        }
+
+        function initOffer() {
+            //var win = $("#Window").data("kendoWindow");
+            //win.center();
+            //win.open();
+
+            // Obtain campaign and segment information
+            var selectedCampaign;
+            var selectedSegment;
+
+            var campaignGrid = $('#CampaignGrid').data('kendoGrid');
+            var campaignRows = campaignGrid.select();
+            campaignRows.each(function (index, row) {
+                var selectedItem = campaignGrid.dataItem(row);
+
+                selectedCampaign = selectedItem.CampaignId;
+            });
+
+            var segmentGrid = "ChannelGrid_" + selectedCampaign;
+            var segmentData = $('#' + segmentGrid).data('kendoGrid');
+            var segmentRows = segmentData.select();
+            segmentRows.each(function (index, row) {
+                var selectedItem = segmentData.dataItem(row);
+
+                selectedSegment = selectedItem.ChannelId;
+            });
+
+            var postData = { channelId: selectedSegment };
+
+            // Check if there are customers in segment
+            $.ajax({
+                url: '@Url.Action("InitOffer_Check")',
+                type: 'GET',
+                data: postData,
+                cache: false,
+                success: function (data) {
+                    // process the results from the controller action
+                    if (data.result) {
+                        alert(data.result);
+                    }
+                }
+            });
+
+
+        }
+
+        function openOfferCodeWin() {
+            var win = $("#lookupWindow").data("kendoWindow");
+            win.center();
+            win.open();
+        }
+
+        function cancelOfferCode() {
+            var win = $("#lookupWindow").data("kendoWindow");
+            win.close();
+        }
+
+        function setOfferToSegment() {
+            var selectedCampaign;
+            var selectedSegment;
+
+            var campaignGrid = $('#CampaignGrid').data('kendoGrid');
+            var campaignRows = campaignGrid.select();
+            campaignRows.each(function (index, row) {
+                var selectedItem = campaignGrid.dataItem(row);
+
+                selectedCampaign = selectedItem.CampaignId;
+            });
+
+            var segmentGrid = "ChannelGrid_" + selectedCampaign;
+            var segmentData = $('#' + segmentGrid).data('kendoGrid');
+            var segmentRows = segmentData.select();
+            segmentRows.each(function (index, row) {
+                var selectedItem = segmentData.dataItem(row);
+
+                selectedSegment = selectedItem.ChannelId;
+            });
+
+            var grid = $('#gridOfferCodes').data('kendoGrid');
+            var rows = grid.select();
+
+            rows.each(function (index, row) {
+                var selectedItem = grid.dataItem(row);
+
+                var postData = { channelId: selectedSegment, redemptionCodeId: selectedItem.RedemptionCodeId };
+
+                $.ajax({
+                    url: '@Url.Action("SetSegmentOffer")',
+                    type: 'GET',
+                    data: postData,
+                    cache: false,
+                    success: function (result) {
+                        // process the results from the controller action
+                        //result = jQuery.parseJSON(result);
+                        //alert("Item(s) added.");
+                    }
+                });
+            });
+
+            var win = $("#lookupWindow").data("kendoWindow");
+            win.close();
+            $('#' + segmentGrid).data("kendoGrid").dataSource.read();
+        }
+
+        //Set Stores to Channel
+        function setStoreToChannel(channelId, campaignId) {
+            var selectedGrid = "ChannelGrid_" + campaignId;
+            var channel = $('#' + selectedGrid).find("tr.k-state-selected").first();
+            var channelSelected = channel.text();
+            var keyword = "all stores";
+            if (channelSelected.search(keyword) > 0) {
+                kendo.alert(
+                    "The store option is set to 'all stores'. Please change the store options to 'selected stores' to add stores to segments.");
+            } else {
+                var selectedGruid = "ChannelStoreGrid_" + channelId;
+                var grid = $('#' + selectedGruid).data('kendoGrid');
+                var rows = grid.select();
+                rows.each(function(index, row) {
+                    var selectedItem = grid.dataItem(row);
+                    var postData = { channelId: channelId, storeId: selectedItem.StoreId, IsSelected: selectedItem.IsSelected };
+                    $.ajax({
+                        url: '@Url.Action("ActivateChannelStore")',
+                        type: 'POST',
+                        data: postData,
+                        cache: false,
+                        success: function(result) {
+                        }
+                    });
+
+                    var channelGrid = "ChannelStoreGrid_" + channelId;
+                    $('#' + channelGrid).data("kendoGrid").dataSource.fetch();
+                });
+            }  
+        }
+
+        //Remove Store in Campaign
+        function removeStores(channelId, campaignId) {
+            var selectedGrid = "ChannelGrid_" + campaignId;
+            var channel = $('#' + selectedGrid).find("tr.k-state-selected").first();
+            var channelSelected = channel.text();
+            var keyword = "all stores";
+            if (channelSelected.search(keyword) > 0) {
+                kendo.alert(
+                    "The store option is set to 'all stores'. Please change the store options to 'selected stores' to add stores to segments.");
+            } else {
+                var selectedGruid = "ChannelStoreGrid_" + channelId;
+                var grid = $('#' + selectedGruid).data('kendoGrid');
+                var rows = grid.select();
+                var itemCounter = 0;
+                var r = confirm("Are you sure you want to remove these stores from this campaign?");
+                if (r === true) {
+                    rows.each(function (index, row) {
+                        var selectedItem = grid.dataItem(row);
+                        var postData = { channelId: channelId, storeId: selectedItem.StoreId };
+                        itemCounter++;
+                        $.ajax({
+                            url: '@Url.Action("DeleteSegmentStore")',
+                            type: 'Post',
+                            data: postData,
+                            cache: false,
+                            async: false,
+                            success: function (result) {
+                            }
+                        });
+                    });
+                    $('#' + selectedGruid).data("kendoGrid").dataSource.read();
+                }
+            }
+            
+        }
+    </script>    
+
+    <script id="SegmentTemplate" type="text/kendo-tmpl">
+        @(Html.Kendo().Grid<ChannelModel>()
+              .Name("ChannelGrid_#=CampaignId#")
+              .Columns(columns =>
+              {
+                  columns.Bound(o => o.ChannelCode).Title("Segment Code");
+                  columns.Bound(o => o.ChannelName).Title("Segment Name");
+                  columns.ForeignKey(c => c.ChannelTypeId, new SelectList(ViewBag.ChannelTypes, "ChannelTypeId", "ChannelTypeName"))
+                         .Title("Segment Type");
+                  columns.Bound(o => o.Description);
+                  columns.Bound(o => o.SegStartDate).Format("{0:dd/MM/yyyy}");
+                  columns.Bound(o => o.SegEndDate).Format("{0:dd/MM/yyyy}");
+                  columns.ForeignKey(c => c.StoreOptionId, new SelectList(ViewBag.StoreOption, "StoreOptionId", "StoreOptionName")).Filterable(filterable => filterable.UI("storeOptionFilter")).Title("Store Option").Width(150);
+                  columns.ForeignKey(c => c.RedemptionCodeId, new SelectList(ViewBag.RedemptionCodes, "RedemptionCodeId", "Description"))
+                         .Title("Offer Code").Width(250);
+                  columns.Command(command => command.Custom("Assign").Click("openOfferCodeWin")).Title("Set Offer");
+                  columns.Command(command => command.Custom("Initiate").Click("initOffer")).Title("Activate Offer");
+                  columns.Command(command => command.Edit());
+              })
+              .ClientDetailTemplateId("ChannelStoreTemplate")
+              .DataSource(dataSource => dataSource
+                                            .Ajax()
+                                            .PageSize(5)
+                                            .Create(update => update.Action("HierarchyBinding_Create", "Channel", new { campaignId = "#=CampaignId#" }))
+                                            .Read(read => read.Action("HierarchyBinding_Channels", "Channel", new { campaignId = "#=CampaignId#" }).Type(HttpVerbs.Post))
+                                            .Update(update => update.Action("HierarchyBinding_Update", "Channel"))
+                                            .Model(model =>
+                                            {
+                                                model.Id(p => p.ChannelId);
+                                                model.Field(p => p.ChannelId).Editable(false);
+                                                model.Field(p => p.ChannelCode).Editable(false);
+                                            })
+              )
+              .ToolBar(toolbar => toolbar.Create().Text("Add new Segment"))
+              .Editable(editable => editable.Mode(GridEditMode.InLine))
+              .Events(events => events.Edit("onEdit").Cancel("onCancel").Save("onSave"))
+              .Pageable(pager => pager.Refresh(true).Messages(messages => messages.Refresh("Click to refresh")))
+              .Selectable(s => s.Mode(GridSelectionMode.Single))
+              .Sortable()
+              .ToClientTemplate()
+        )
+    </script>
+
+</div>
+
+
+
+<script id="ChannelStoreTemplate" type="text/kendo-tmpl">
+        @(Html.Kendo().TabStrip()
+              .Name("tabStrip_#=ChannelId#")
+              .SelectedIndex(0)
+              .Items(tabStrip =>
+              {
+              tabStrip.Add().Text("Store List")
+                  .Content(
+                          @<text>
+                        <div id="channelStore_#=ChannelId#">
+                            @(Html.Kendo().Grid<ChannelStoreModel>()
+                                  .Name("ChannelStoreGrid_#=ChannelId#")
+                                  .Columns(columns =>
+                                  {
+                                      columns.Bound(c => c.StoreCode).Title("Store Code").Filterable(filter => filter.Extra(false));
+                                      columns.Bound(c => c.StoreName).Title("Store Name").Filterable(filter => filter.Extra(false));
+                                      columns.Bound(c => c.BusinessName).Title("Business Name").Filterable(filter => filter.Extra(false)); //.UI("businessNameFilter"));
+                                      columns.Bound(c => c.OpenDate).Format("{0:dd/MM/yyyy}");
+                                      columns.Bound(c => c.IsSelected).ClientTemplate("<input type='checkbox'  disabled \\#=IsSelected ? 'checked' : ''  \\# /> ");
+                                  })
+                                  .DataSource(dataSource => dataSource
+                                      .Ajax()
+                                      .PageSize(20)
+                                      .Read(read => read.Action("CampaignStores_SegmentRead", "Channel", new {channelId = "#=ChannelId#" }))
+                                      .Model(model =>
+                                      {
+                                          model.Id(p => p.ChannelId);
+                                          model.Field(p => p.ChannelStoreId).Editable(false);
+                                      })
+                                  )
+                                  .Pageable(pager => pager.PageSizes(new[] {10, 20, 100}))
+                                  .Pageable(pager => pager.Refresh(true).Messages(messages => messages.Refresh("Click to refresh")))
+                                  .Sortable()
+                                  .Filterable()
+                                  .Selectable(selectable => selectable
+                                      .Mode(GridSelectionMode.Multiple)
+                                      .Type(GridSelectionType.Row))
+                                  .Resizable(resize => resize.Columns(true))
+                                  .HtmlAttributes(new {style = "font-size:12px"})
+                                  .ToClientTemplate()
+                                  )
+                            <br />            
+                            <button type="button" id="SetStore" onclick="setStoreToChannel(#=ChannelId#, #=MasterCampaignId#)" class="k-button">Select Store</button>
+                            <button type="button" id="RemoveStore" onclick="removeStores(#=ChannelId#, #=MasterCampaignId#)" class="k-button">Remove Store</button>
+                        </div>
+                
+                           </text>
+                      );
+              }).ToClientTemplate()
+              )
+        </script>
+
+

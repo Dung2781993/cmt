@@ -1,0 +1,1056 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--LLBLGen Pro v5.2 project file. Do not manually edit this file. Incorrect references could lead to an unloadable project file.-->
+<Project Version="5.2" TargetFrameworkName="LLBLGen Pro Runtime Framework">
+  <Properties>
+    <Abbreviations />
+    <Property Name="AdditionalTaskPerformerFolder" Value="" />
+    <Property Name="AdditionalTasksFolder" Value="" />
+    <Property Name="AdditionalTemplatesFolder" Value="" />
+    <Property Name="AdditionalTypeConverterFolder" Value="" />
+    <Property Name="AddNewElementsAfterRefresh_v5" Value="false" />
+    <Property Name="AddNewElementsAfterRelationalModelDataSync_v5" Value="false" />
+    <Property Name="AddNewFieldsAfterRefresh_v5" Value="true" />
+    <Property Name="AddNewFieldsAfterRelationalModelDataSync_v5" Value="true" />
+    <Property Name="AddNewViewsAsEntitiesAfterRefresh_v5" Value="false" />
+    <Property Name="AddNewViewsAsEntitiesAfterRelationalModelDataSync_v5" Value="false" />
+    <Property Name="AutoAddManyToManyRelationships" Value="false" />
+    <Property Name="AutoAssignSequencesToIntegerPks" Value="true" />
+    <Property Name="AutoAssignTypeConverterToFieldMapping" Value="true" />
+    <Property Name="CleanUpVsNetProjects" Value="true" />
+    <Property Name="ConnectionStringKeyNamePattern" Value="ConnectionString.{$ProviderName}" />
+    <Property Name="DefaultDeleteRuleAction" Value="1" />
+    <Property Name="DefaultUpdateRuleAction" Value="0" />
+    <Property Name="EncodingToUse" Value="0" />
+    <Property Name="EntityActionCombinationDefaultForTable" Value="0" />
+    <Property Name="EntityActionCombinationDefaultForView" Value="4" />
+    <Property Name="EntityFieldNameStripPattern" Value="{}{}" />
+    <Property Name="EntityNameStripPattern" Value="{tbl_}{}" />
+    <Property Name="ExcludableOrphanedElementDetectedAction" Value="3" />
+    <Property Name="FailCodeGenerationOnWriteError" Value="false" />
+    <Property Name="FieldMappedOntoRelatedFieldPattern" Value="{$RelatedFieldName}" />
+    <Property Name="FkFieldsAreNamedAfterTargetField" Value="true" />
+    <Property Name="ForeignKeyConstraintPattern" Value="FK_{$Guid}" />
+    <Property Name="ForeignKeyFieldPattern" Value="{$NavigatorName}{$RelatedFieldName}" />
+    <Property Name="GroupUsage" Value="0" />
+    <Property Name="IdentifyingFieldsFollowDBPrimaryKeyConstraints_v5" Value="true" />
+    <Property Name="InsertUnderscoreAtWordBreakCaseInsensitiveDBs" Value="false" />
+    <Property Name="InsertUnderscoreAtWordBreakCaseSensitiveDBs" Value="false" />
+    <Property Name="LengthPrecisionScaleFollowDBLengthPrecisionScale_v5" Value="true" />
+    <Property Name="MakeElementNamePascalCasing" Value="true" />
+    <Property Name="NavigatorMappedOntoManyToManyPattern" Value="{$EndEntityName}CollectionVia{$IntermediateEntityName$S}" />
+    <Property Name="NavigatorMappedOntoOneManyToOnePattern" Value="{$EndEntityName$S}" />
+    <Property Name="NavigatorMappedOntoOneToManyPattern" Value="{$EndEntityName$P}" />
+    <Property Name="NonExcludableOrphanedElementDetectedAction" Value="3" />
+    <Property Name="PreferDecimalOverCurrencyTypes" Value="true" />
+    <Property Name="PreferNaturalCharacterTypes" Value="true" />
+    <Property Name="PreferSystemSequencesOverSchemaSequencesIfApplicable" Value="true" />
+    <Property Name="PreferVariableLengthTypes" Value="true" />
+    <Property Name="PrimaryKeyConstraintPattern" Value="PK_{$Guid}" />
+    <Property Name="ProjectCreator" Value="Jason Le" />
+    <Property Name="ProjectName" Value="Mecca.CMT.DAL" />
+    <Property Name="ReflectNullabilityOfElementFieldInTargetField_v5" Value="false" />
+    <Property Name="ReflectTypeOfElementFieldInTargetField_v5" Value="true" />
+    <Property Name="RelationalModelDataElementNameCasingCaseInsensitiveDBs" Value="3" />
+    <Property Name="RelationalModelDataElementNameCasingCaseSensitiveDBs" Value="3" />
+    <Property Name="RelationshipsFollowDBForeignKeyConstraints_v5" Value="true" />
+    <Property Name="RemoveUnderscoresFromElementName" Value="true" />
+    <Property Name="RemoveUnmappedElementsAfterRefresh_v5" Value="false" />
+    <Property Name="RemoveUnmappedElementsAfterRelationalModelDataSync_v5" Value="false" />
+    <Property Name="ResetFieldOrderBasedOnTargetOrderAtRefresh" Value="false" />
+    <Property Name="ResetFieldOrderBasedOnTargetOrderAtRelationalModelDataSync" Value="false" />
+    <Property Name="RetrieveDBCustomProperties" Value="false" />
+    <Property Name="RootNamespace" Value="" />
+    <Property Name="SequenceNameMatchingPattern" Value="SEQ_{$TableName}" />
+    <Property Name="SequencePattern" Value="SEQ_{$EntityName}" />
+    <Property Name="SetGroupNameAfterSchemaName" Value="true" />
+    <Property Name="SetSchemaNameAfterGroupName" Value="true" />
+    <Property Name="SingularizeElementNames" Value="true" />
+    <Property Name="StoredProcNameStripPattern" Value="{pr_, sp_}{}" />
+    <Property Name="StoreTimeLastGeneratedIntoProject" Value="false" />
+    <Property Name="SyncMappedElementNamesAfterRefresh_v5" Value="false" />
+    <Property Name="SyncMappedElementNamesAfterRelationalModelDataSync_v5" Value="false" />
+    <Property Name="SyncRelationalModelDataElementNameWithModelElementName_v5" Value="false" />
+    <Property Name="SyncRenamedMappedElementNamesAfterRefresh_v5" Value="false" />
+    <Property Name="SyncRenamedMappedElementNamesAfterRelationalModelDataSync_v5" Value="false" />
+    <Property Name="TableValuedFunctionNameStripPattern" Value="{fn_, pr_, sp_}{}" />
+    <Property Name="TargetPerEntityEdgesRequireBackingFkConstraint" Value="true" />
+    <Property Name="TypedViewFieldNameStripPattern" Value="{}{}" />
+    <Property Name="TypedViewMappedOnResultsetPattern" Value="{$ProcFunctionName}{$ResultsetName}Result" />
+    <Property Name="TypedViewNameStripPattern" Value="{vw_}{}" />
+    <Property Name="UniqueConstraintPattern" Value="UC_{$Guid}" />
+    <Property Name="UniqueConstraintsFollowDBUniqueConstraints_v5" Value="true" />
+    <Property Name="UpdateCustomPropertiesAfterRefresh_v5" Value="false" />
+    <Property Name="UpdateCustomPropertiesAfterRelationalModelDataSync_v5" Value="false" />
+    <Property Name="UseCustomFieldOrderingOnNewElements" Value="false" />
+  </Properties>
+  <TypeShortcuts />
+  <IgnoredWarnings />
+  <SavedSearchQueries />
+  <CodeGenerationCyclePreferences>
+    <OutputType Value="3">
+      <LastUsedPreferences>
+        <DestinationRootFolder Value=".\" />
+        <FrameworkName Value="LLBLGen Pro Runtime Framework" />
+        <LanguageName Value="C#" />
+        <PlatformName Value=".NET 4.6.2" />
+        <PresetName Value="SD.Presets.SelfServicing.General" />
+        <RootNamespace Value="Mecca.CMT.DAL" />
+        <TemplateGroup Value="SelfServicing" />
+        <TemplateBindings>
+          <Binding Name="SD.TemplateBindings.SharedTemplates.Deprecated" />
+          <Binding Name="SD.TemplateBindings.SharedTemplates.NET45x" />
+          <Binding Name="SD.TemplateBindings.SharedTemplates" />
+          <Binding Name="SD.TemplateBindings.SqlServerSpecific" />
+          <Binding Name="SD.TemplateBindings.General" />
+        </TemplateBindings>
+      </LastUsedPreferences>
+    </OutputType>
+    <OutputType Value="1">
+      <LastUsedPreferences>
+        <DestinationRootFolder Value="" />
+        <FrameworkName Value="DDL SQL" />
+        <LanguageName Value="SQL" />
+        <PlatformName Value="RDBMS" />
+        <PresetName Value="" />
+        <RootNamespace Value="" />
+        <TemplateGroup Value="Create DDL SQL" />
+        <TemplateBindings />
+      </LastUsedPreferences>
+    </OutputType>
+  </CodeGenerationCyclePreferences>
+  <CodeGenerationMetaDataDefaults>
+    <TargetElement Type="256">
+      <Defaults>
+        <Attributes>
+          <Attribute Value="Browsable($false)" />
+        </Attributes>
+      </Defaults>
+    </TargetElement>
+  </CodeGenerationMetaDataDefaults>
+  <EntityModel>
+    <ValueTypeDefinitions />
+    <EntityDefinitions>
+      <EntityDefinition Name="Campaign" ObjectID="3f78694c-53b8-442c-9bda-d624c368f8f3">
+        <Fields>
+          <Field Name="BusinessFormat" Type="string" MaxLength="10" />
+          <Field Name="CampaignCode" Type="string" IsOptional="true" MaxLength="10" />
+          <Field Name="CampaignId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
+          <Field Name="CampaignName" Type="string" MaxLength="100" />
+          <Field Name="CampaignTypeId" Type="int" Precision="10" />
+          <Field Name="CreatedBy" Type="string" MaxLength="200" />
+          <Field Name="Description" Type="string" IsOptional="true" MaxLength="250" />
+          <Field Name="EndDate" Type="datetime" />
+          <Field Name="IsLocked" Type="int" Precision="10" />
+          <Field Name="RedemptionCodeId" Type="int" Precision="10" />
+          <Field Name="StartDate" Type="datetime" />
+          <Field Name="StoreOptionId" Type="int" Precision="10" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="CampaignItem" ObjectID="ca0f588d-f35f-4db1-b980-a7ab333084a0">
+        <Fields>
+          <Field Name="CampaignId" Type="int" Precision="10" />
+          <Field Name="CampaignItemId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
+          <Field Name="DateAdded" Type="datetime" IsOptional="true" />
+          <Field Name="EndDate" Type="datetime" IsOptional="true" />
+          <Field Name="ProductId" Type="int" Precision="10" />
+          <Field Name="StartDate" Type="datetime" IsOptional="true" />
+        </Fields>
+        <UniqueConstraints>
+          <UniqueConstraint Name="CampaignItemsUxCampaignIdProductId">
+            <Field Name="CampaignId" />
+            <Field Name="ProductId" />
+          </UniqueConstraint>
+        </UniqueConstraints>
+      </EntityDefinition>
+      <EntityDefinition Name="CampaignOwner" ObjectID="ad726110-ecad-46dd-b54c-ab6b2b090649">
+        <Fields>
+          <Field Name="CampaignId" Type="int" Precision="10" />
+          <Field Name="CampaignOwnerId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
+          <Field Name="Owner" Type="string" MaxLength="200" />
+        </Fields>
+        <UniqueConstraints>
+          <UniqueConstraint Name="CampaignOwnersUxCampaignIdOwner">
+            <Field Name="CampaignId" />
+            <Field Name="Owner" />
+          </UniqueConstraint>
+        </UniqueConstraints>
+      </EntityDefinition>
+      <EntityDefinition Name="CampaignStore" ObjectID="4d7c8031-128e-46ac-ac59-48423cd310dd">
+        <Fields>
+          <Field Name="CampaignId" Type="int" Precision="10" />
+          <Field Name="CampaignStoreId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
+          <Field Name="DateAdded" Type="datetime" IsOptional="true" />
+          <Field Name="IsSelected" Type="int" Precision="10" />
+          <Field Name="StoreId" Type="int" Precision="10" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="CampaignType" ObjectID="ad269fb0-c1ce-41ba-b3d0-f8fca9eafa43">
+        <Fields>
+          <Field Name="CampaignTypeId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
+          <Field Name="CampaignTypeName" Type="string" MaxLength="50" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="Channel" ObjectID="fb282132-4acc-4cd2-8a2e-39ee84e8df14">
+        <Fields>
+          <Field Name="CampaignId" Type="int" Precision="10" />
+          <Field Name="ChannelCode" Type="string" IsOptional="true" MaxLength="10" />
+          <Field Name="ChannelId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
+          <Field Name="ChannelName" Type="string" MaxLength="250" />
+          <Field Name="ChannelTypeId" Type="int" Precision="10" />
+          <Field Name="CreatedBy" Type="string" MaxLength="200" />
+          <Field Name="Description" Type="string" IsOptional="true" MaxLength="250" />
+          <Field Name="EndDate" Type="datetime" />
+          <Field Name="IsLocked" Type="int" Precision="10" />
+          <Field Name="RedemptionCodeId" Type="int" Precision="10" />
+          <Field Name="StartDate" Type="datetime" />
+          <Field Name="StoreOptionId" Type="int" Precision="10" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="ChannelCustomer" ObjectID="d9d3842f-2ce3-46fc-93a3-5b3815fc3541">
+        <Fields>
+          <Field Name="ChannelCustomerId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
+          <Field Name="ChannelId" Type="int" Precision="10" />
+          <Field Name="CustomerSid" Type="long" Precision="19" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="ChannelItem" ObjectID="71d0108c-0e75-41bb-b233-f96e6bf65b03">
+        <Fields>
+          <Field Name="ChannelId" Type="int" Precision="10" />
+          <Field Name="ChannelItemId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
+          <Field Name="Comments" Type="string" IsOptional="true" MaxLength="500" />
+          <Field Name="LiveMerchQty" Type="int" IsOptional="true" Precision="10" />
+          <Field Name="NumStores" Type="int" IsOptional="true" Precision="10" />
+          <Field Name="ProductId" Type="int" Precision="10" />
+          <Field Name="SampleQty" Type="int" IsOptional="true" Precision="10" />
+          <Field Name="TesterMerchQty" Type="int" IsOptional="true" Precision="10" />
+        </Fields>
+        <UniqueConstraints>
+          <UniqueConstraint Name="ChannelItemsUxChannelIdProductId">
+            <Field Name="ChannelId" />
+            <Field Name="ProductId" />
+          </UniqueConstraint>
+        </UniqueConstraints>
+      </EntityDefinition>
+      <EntityDefinition Name="ChannelOwner" ObjectID="4ce96bb8-8f6b-44cb-8c70-a7b4949c0f4d">
+        <Fields>
+          <Field Name="CampaignId" Type="int" Precision="10" />
+          <Field Name="ChannelId" Type="int" Precision="10" />
+          <Field Name="ChannelOwnerId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
+          <Field Name="Owner" Type="string" MaxLength="200" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="ChannelStore" ObjectID="8b15284e-9f79-4a54-a425-690a831fe35c">
+        <Fields>
+          <Field Name="CampaignId" Type="int" Precision="10" />
+          <Field Name="ChannelId" Type="int" Precision="10" />
+          <Field Name="ChannelStoreId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
+          <Field Name="DateAdded" Type="datetime" IsOptional="true" />
+          <Field Name="IsSelected" Type="int" Precision="10" />
+          <Field Name="StoreId" Type="int" Precision="10" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="ChannelType" ObjectID="ae65322a-9fad-459d-8dc0-0e8522341633">
+        <Fields>
+          <Field Name="ChannelTypeId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
+          <Field Name="ChannelTypeName" Type="string" MaxLength="50" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="Product" ObjectID="e0a5f3c0-8339-431d-8a80-cbc1a6eea356">
+        <Fields>
+          <Field Name="CategoryName" Type="string" IsOptional="true" MaxLength="50" />
+          <Field Name="CompanySoh" Type="int" IsOptional="true" Precision="10" />
+          <Field Name="DepartmentName" Type="string" IsOptional="true" MaxLength="50" />
+          <Field Name="Description" Type="string" MaxLength="30" />
+          <Field Name="ExpectedReceiptDate" Type="datetime" IsOptional="true" />
+          <Field Name="ItemCode" Type="string" MaxLength="20" />
+          <Field Name="ItemSid" Type="decimal" IsOptional="true" Precision="19" />
+          <Field Name="LaunchDate" Type="datetime" IsOptional="true" />
+          <Field Name="Lifestage" Type="string" IsOptional="true" MaxLength="5" />
+          <Field Name="LimitedEdition" Type="string" IsOptional="true" MaxLength="3" />
+          <Field Name="NoTester" Type="string" IsOptional="true" MaxLength="50" />
+          <Field Name="NzUnitPrice" Type="decimal" IsOptional="true" Precision="12" Scale="3" />
+          <Field Name="ProductId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
+          <Field Name="RangingCodeImo" Type="string" IsOptional="true" MaxLength="342" />
+          <Field Name="RangingCodeKit" Type="string" IsOptional="true" MaxLength="342" />
+          <Field Name="RangingCodeMaxima" Type="string" IsOptional="true" MaxLength="342" />
+          <Field Name="RangingCodeMecca" Type="string" IsOptional="true" MaxLength="342" />
+          <Field Name="StockOnOrder" Type="int" IsOptional="true" Precision="10" />
+          <Field Name="TerminationDate" Type="string" IsOptional="true" MaxLength="10" />
+          <Field Name="TransitionItemCode" Type="string" IsOptional="true" MaxLength="20" />
+          <Field Name="TravelSize" Type="string" IsOptional="true" MaxLength="5" />
+          <Field Name="UnitPrice" Type="decimal" IsOptional="true" Precision="12" Scale="3" />
+          <Field Name="VendorCode" Type="string" MaxLength="20" />
+        </Fields>
+        <UniqueConstraints>
+          <UniqueConstraint Name="ProductsItemCode">
+            <Field Name="ItemCode" />
+          </UniqueConstraint>
+        </UniqueConstraints>
+      </EntityDefinition>
+      <EntityDefinition Name="RedemptionCode" ObjectID="1e730c3b-2654-4310-be2b-f05786c3a5bd">
+        <Fields>
+          <Field Name="Description" Type="string" MaxLength="50" />
+          <Field Name="OfferCode" Type="string" MaxLength="20" />
+          <Field Name="RedemptionCodeId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
+        </Fields>
+        <UniqueConstraints>
+          <UniqueConstraint Name="RedemptionCodesOfferCode">
+            <Field Name="OfferCode" />
+          </UniqueConstraint>
+        </UniqueConstraints>
+      </EntityDefinition>
+      <EntityDefinition Name="Store" ObjectID="96a87af2-c695-491c-b005-3a5203b42093">
+        <Fields>
+          <Field Name="BusinessName" Type="string" MaxLength="50" />
+          <Field Name="OpenDate" Type="datetime" IsOptional="true" />
+          <Field Name="StoreCode" Type="string" MaxLength="20" />
+          <Field Name="StoreId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
+          <Field Name="StoreName" Type="string" MaxLength="50" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="StoreOption" ObjectID="7d41d3c2-0bd6-4bee-8524-cdeeeb5a62a6">
+        <Fields>
+          <Field Name="StoreOptionId" Type="int" Precision="10" IsPrimaryKey="true" />
+          <Field Name="StoreOptionName" Type="string" MaxLength="50" />
+        </Fields>
+      </EntityDefinition>
+    </EntityDefinitions>
+    <Relationships>
+      <NormalRelationship Name="Campaign.CampaignType-CampaignType.Campaigns" Start=":Campaign" End=":CampaignType" StartNavigator="CampaignType" EndNavigator="Campaigns" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="CampaignTypeId" PkField="CampaignTypeId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Campaign.RedemptionCode-RedemptionCode.Campaigns" Start=":Campaign" End=":RedemptionCode" StartNavigator="RedemptionCode" EndNavigator="Campaigns" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="RedemptionCodeId" PkField="RedemptionCodeId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="CampaignItem.Campaign-Campaign.CampaignItems" Start=":CampaignItem" End=":Campaign" StartNavigator="Campaign" EndNavigator="CampaignItems" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="CampaignId" PkField="CampaignId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="CampaignItem.Product-Product.CampaignItems" Start=":CampaignItem" End=":Product" StartNavigator="Product" EndNavigator="CampaignItems" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ProductId" PkField="ProductId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="CampaignOwner.Campaign-Campaign.CampaignOwners" Start=":CampaignOwner" End=":Campaign" StartNavigator="Campaign" EndNavigator="CampaignOwners" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="CampaignId" PkField="CampaignId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Channel.Campaign-Campaign.Channels" Start=":Channel" End=":Campaign" StartNavigator="Campaign" EndNavigator="Channels" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="CampaignId" PkField="CampaignId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Channel.ChannelType-ChannelType.Channels" Start=":Channel" End=":ChannelType" StartNavigator="ChannelType" EndNavigator="Channels" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ChannelTypeId" PkField="ChannelTypeId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Channel.RedemptionCode-RedemptionCode.Channels" Start=":Channel" End=":RedemptionCode" StartNavigator="RedemptionCode" EndNavigator="Channels" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="RedemptionCodeId" PkField="RedemptionCodeId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="ChannelCustomer.Channel-Channel.ChannelCustomers" Start=":ChannelCustomer" End=":Channel" StartNavigator="Channel" EndNavigator="ChannelCustomers" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ChannelId" PkField="ChannelId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="ChannelItem.Channel-Channel.ChannelItems" Start=":ChannelItem" End=":Channel" StartNavigator="Channel" EndNavigator="ChannelItems" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ChannelId" PkField="ChannelId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="ChannelItem.Product-Product.ChannelItems" Start=":ChannelItem" End=":Product" StartNavigator="Product" EndNavigator="ChannelItems" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ProductId" PkField="ProductId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="ChannelOwner.Campaign-Campaign.ChannelOwners" Start=":ChannelOwner" End=":Campaign" StartNavigator="Campaign" EndNavigator="ChannelOwners" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="CampaignId" PkField="CampaignId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="ChannelOwner.Channel-Channel.ChannelOwners" Start=":ChannelOwner" End=":Channel" StartNavigator="Channel" EndNavigator="ChannelOwners" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ChannelId" PkField="ChannelId" />
+        </FieldRelationships>
+      </NormalRelationship>
+    </Relationships>
+    <InheritanceHierarchies />
+  </EntityModel>
+  <TypedViewDefinitions>
+    <TypedViewDefinition Name="Campaign1" ObjectID="f03db1b0-669f-4fe7-b5e3-71e96d57bbd4">
+      <Fields>
+        <Field Name="BusinessFormat" Type="string" MaxLength="10" />
+        <Field Name="CampaignCode" Type="string" IsOptional="true" MaxLength="10" />
+        <Field Name="CampaignId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
+        <Field Name="CampaignName" Type="string" MaxLength="100" />
+        <Field Name="CampaignTypeId" Type="int" Precision="10" />
+        <Field Name="CreatedBy" Type="string" MaxLength="200" />
+        <Field Name="Description" Type="string" IsOptional="true" MaxLength="250" />
+        <Field Name="EndDate" Type="datetime" />
+        <Field Name="IsLocked" Type="int" Precision="10" />
+        <Field Name="RedemptionCodeId" Type="int" Precision="10" />
+        <Field Name="StartDate" Type="datetime" />
+        <Field Name="StoreOptionId" Type="int" Precision="10" />
+      </Fields>
+    </TypedViewDefinition>
+    <TypedViewDefinition Name="CampaignOwner1" ObjectID="6861718d-d60f-4b0e-9599-85edf3718795">
+      <Fields>
+        <Field Name="CampaignId" Type="int" Precision="10" />
+        <Field Name="CampaignOwnerId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
+        <Field Name="Owner" Type="string" MaxLength="200" />
+      </Fields>
+    </TypedViewDefinition>
+    <TypedViewDefinition Name="CampaignType1" ObjectID="d43e6c0f-5f3f-438d-81fa-f468f46a3da0">
+      <Fields>
+        <Field Name="CampaignTypeId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
+        <Field Name="CampaignTypeName" Type="string" MaxLength="50" />
+      </Fields>
+    </TypedViewDefinition>
+    <TypedViewDefinition Name="Channel1" ObjectID="e49d285b-ede6-46ce-8faf-2f67d5383125">
+      <Fields>
+        <Field Name="CampaignId" Type="int" Precision="10" />
+        <Field Name="ChannelCode" Type="string" IsOptional="true" MaxLength="10" />
+        <Field Name="ChannelId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
+        <Field Name="ChannelName" Type="string" MaxLength="250" />
+        <Field Name="ChannelTypeId" Type="int" Precision="10" />
+        <Field Name="CreatedBy" Type="string" MaxLength="200" />
+        <Field Name="Description" Type="string" IsOptional="true" MaxLength="250" />
+        <Field Name="EndDate" Type="datetime" />
+        <Field Name="IsLocked" Type="int" Precision="10" />
+        <Field Name="RedemptionCodeId" Type="int" Precision="10" />
+        <Field Name="StartDate" Type="datetime" />
+        <Field Name="StoreOptionId" Type="int" Precision="10" />
+      </Fields>
+    </TypedViewDefinition>
+    <TypedViewDefinition Name="ChannelCustomer1" ObjectID="2b04b158-e4b6-45bc-b016-cf2f40047f72">
+      <Fields>
+        <Field Name="ChannelCustomerId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
+        <Field Name="ChannelId" Type="int" Precision="10" />
+        <Field Name="CustomerSid" Type="long" Precision="19" />
+      </Fields>
+    </TypedViewDefinition>
+    <TypedViewDefinition Name="ChannelItem1" ObjectID="d59c302b-f2b0-41f3-b2fc-0916651466d8">
+      <Fields>
+        <Field Name="ChannelId" Type="int" Precision="10" />
+        <Field Name="ChannelItemId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
+        <Field Name="Comments" Type="string" IsOptional="true" MaxLength="500" />
+        <Field Name="LiveMerchQty" Type="int" IsOptional="true" Precision="10" />
+        <Field Name="NumStores" Type="int" IsOptional="true" Precision="10" />
+        <Field Name="ProductId" Type="int" Precision="10" />
+        <Field Name="SampleQty" Type="int" IsOptional="true" Precision="10" />
+        <Field Name="TesterMerchQty" Type="int" IsOptional="true" Precision="10" />
+      </Fields>
+    </TypedViewDefinition>
+    <TypedViewDefinition Name="ChannelOwner1" ObjectID="5e23fe8f-e666-4159-bc0d-31fedeea9fec">
+      <Fields>
+        <Field Name="CampaignId" Type="int" Precision="10" />
+        <Field Name="ChannelId" Type="int" Precision="10" />
+        <Field Name="ChannelOwnerId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
+        <Field Name="Owner" Type="string" MaxLength="200" />
+      </Fields>
+    </TypedViewDefinition>
+    <TypedViewDefinition Name="ChannelType1" ObjectID="7156a008-a756-437a-bace-52e5c30d432e">
+      <Fields>
+        <Field Name="ChannelTypeId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
+        <Field Name="ChannelTypeName" Type="string" MaxLength="50" />
+      </Fields>
+    </TypedViewDefinition>
+    <TypedViewDefinition Name="RedemptionCode1" ObjectID="ec92c12a-e5d9-4def-8897-c40c6cf9a341">
+      <Fields>
+        <Field Name="Description" Type="string" MaxLength="50" />
+        <Field Name="OfferCode" Type="string" MaxLength="20" />
+        <Field Name="RedemptionCodeId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
+      </Fields>
+    </TypedViewDefinition>
+  </TypedViewDefinitions>
+  <SPCallDefinitions>
+    <SPCallDefinition Name="DeleteSegmentCustomers" ObjectID="4bb5d935-f554-47e7-bffb-d6811f8f0708">
+      <Parameters>
+        <Parameter Name="ChannelId" Type="int" Precision="10" />
+      </Parameters>
+    </SPCallDefinition>
+    <SPCallDefinition Name="GetSegmentCustomers" ObjectID="651b17e9-7cc1-4e6b-9762-0c9fc9c73b5f">
+      <Parameters>
+        <Parameter Name="ChannelId" Type="int" Precision="10" />
+        <Parameter Name="TotalCustomers" Type="int" Precision="10" Direction="3" />
+      </Parameters>
+    </SPCallDefinition>
+  </SPCallDefinitions>
+  <TargetDatabases>
+    <TargetDatabase Type="2D18D138-1DD2-467E-86CC-4838250611AE" SyncSource="2">
+      <ConnectionElements>
+        <ConnectionElement Name="ServerName" Value=".\SQLEXPRESS" />
+        <ConnectionElement Name="CatalogName" Value="master" />
+        <ConnectionElement Name="UseWindowsAuthentication" Value="true" />
+        <ConnectionElement Name="UserID" Value="" />
+        <ConnectionElement Name="Password" Value="" />
+      </ConnectionElements>
+      <SystemSequences>
+        <Sequence Name="SCOPE_IDENTITY()" />
+        <Sequence Name="@@IDENTITY" />
+      </SystemSequences>
+      <Catalogs>
+        <Catalog Name="mecca_cmt">
+          <Schemas>
+            <Schema Name="dbo" SyncSource="2" LastSyncWithDatabase="2018-02-08T03:46:38.8594833Z">
+              <Tables>
+                <Table Name="campaign_items">
+                  <PkConstraintName Name="PK_campaign_items_campaign_item_id" />
+                  <Fields>
+                    <Field Name="campaign_item_id" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" DbType="8" Precision="10" />
+                    <Field Name="campaign_id" Ordinal="2" DbType="8" Precision="10" />
+                    <Field Name="product_id" Ordinal="3" DbType="8" Precision="10" />
+                    <Field Name="date_added" Ordinal="4" IsOptional="true" HasDefaultValue="true" DefaultValue="NULL" DbType="28" />
+                    <Field Name="start_date" Ordinal="5" IsOptional="true" DbType="28" />
+                    <Field Name="end_date" Ordinal="6" IsOptional="true" DbType="28" />
+                  </Fields>
+                  <UniqueConstraints>
+                    <UniqueConstraint Name="campaign_items$UX_campaign_id_product_id">
+                      <Field Name="campaign_id" />
+                      <Field Name="product_id" />
+                    </UniqueConstraint>
+                  </UniqueConstraints>
+                </Table>
+                <Table Name="campaign_owners">
+                  <PkConstraintName Name="PK_campaign_owners_campaign_owner_id" />
+                  <Fields>
+                    <Field Name="campaign_owner_id" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" DbType="8" Precision="10" />
+                    <Field Name="campaign_id" Ordinal="2" DbType="8" Precision="10" />
+                    <Field Name="owner" Ordinal="3" DbType="12" Length="200" />
+                  </Fields>
+                  <UniqueConstraints>
+                    <UniqueConstraint Name="campaign_owners$UX_campaign_id_owner">
+                      <Field Name="campaign_id" />
+                      <Field Name="owner" />
+                    </UniqueConstraint>
+                  </UniqueConstraints>
+                </Table>
+                <Table Name="campaign_stores">
+                  <PkConstraintName Name="PK_campaign_stores" />
+                  <Fields>
+                    <Field Name="campaign_store_id" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" DbType="8" Precision="10" />
+                    <Field Name="campaign_id" Ordinal="2" DbType="8" Precision="10" />
+                    <Field Name="store_id" Ordinal="3" DbType="8" Precision="10" />
+                    <Field Name="date_added" Ordinal="4" IsOptional="true" DbType="28" />
+                    <Field Name="is_selected" Ordinal="5" HasDefaultValue="true" DefaultValue="(0)" DbType="8" Precision="10" />
+                  </Fields>
+                </Table>
+                <Table Name="campaign_types">
+                  <PkConstraintName Name="PK_campaign_types_campaign_type_id" />
+                  <Fields>
+                    <Field Name="campaign_type_id" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" DbType="8" Precision="10" />
+                    <Field Name="campaign_type_name" Ordinal="2" DbType="12" Length="50" />
+                  </Fields>
+                </Table>
+                <Table Name="campaigns">
+                  <PkConstraintName Name="PK_campaigns_campaign_id" />
+                  <Fields>
+                    <Field Name="campaign_id" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" DbType="8" Precision="10" />
+                    <Field Name="business_format" Ordinal="2" DbType="12" Length="10" />
+                    <Field Name="campaign_code" Ordinal="3" IsOptional="true" DbType="12" Length="10" />
+                    <Field Name="campaign_name" Ordinal="4" DbType="12" Length="100" />
+                    <Field Name="campaign_type_id" Ordinal="5" DbType="8" Precision="10" />
+                    <Field Name="description" Ordinal="6" IsOptional="true" HasDefaultValue="true" DefaultValue="NULL" DbType="12" Length="250" />
+                    <Field Name="start_date" Ordinal="7" DbType="28" />
+                    <Field Name="end_date" Ordinal="8" DbType="28" />
+                    <Field Name="redemption_code_id" Ordinal="9" DbType="8" Precision="10" />
+                    <Field Name="is_locked" Ordinal="10" HasDefaultValue="true" DefaultValue="(0)" DbType="8" Precision="10" />
+                    <Field Name="created_by" Ordinal="11" DbType="12" Length="200" />
+                    <Field Name="store_option_id" Ordinal="12" HasDefaultValue="true" DefaultValue="(1)" DbType="8" Precision="10" />
+                  </Fields>
+                </Table>
+                <Table Name="channel_customers">
+                  <PkConstraintName Name="PK_channel_customers_channel_customer_id" />
+                  <Fields>
+                    <Field Name="channel_customer_id" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" DbType="8" Precision="10" />
+                    <Field Name="channel_id" Ordinal="2" DbType="8" Precision="10" />
+                    <Field Name="customer_sid" Ordinal="3" DbType="0" Precision="19" />
+                  </Fields>
+                </Table>
+                <Table Name="channel_items">
+                  <PkConstraintName Name="PK_channel_items_channel_item_id" />
+                  <Fields>
+                    <Field Name="channel_item_id" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" DbType="8" Precision="10" />
+                    <Field Name="channel_id" Ordinal="2" DbType="8" Precision="10" />
+                    <Field Name="product_id" Ordinal="3" DbType="8" Precision="10" />
+                    <Field Name="tester_merch_qty" Ordinal="4" IsOptional="true" DbType="8" Precision="10" />
+                    <Field Name="live_merch_qty" Ordinal="5" IsOptional="true" DbType="8" Precision="10" />
+                    <Field Name="num_stores" Ordinal="6" IsOptional="true" DbType="8" Precision="10" />
+                    <Field Name="comments" Ordinal="7" IsOptional="true" DbType="24" Length="500" />
+                    <Field Name="sample_qty" Ordinal="8" IsOptional="true" DbType="8" Precision="10" />
+                  </Fields>
+                  <UniqueConstraints>
+                    <UniqueConstraint Name="channel_items$UX_channel_id_product_id">
+                      <Field Name="channel_id" />
+                      <Field Name="product_id" />
+                    </UniqueConstraint>
+                  </UniqueConstraints>
+                </Table>
+                <Table Name="channel_owners">
+                  <PkConstraintName Name="PK_channel_owners_channel_owner_id" />
+                  <Fields>
+                    <Field Name="channel_owner_id" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" DbType="8" Precision="10" />
+                    <Field Name="campaign_id" Ordinal="2" DbType="8" Precision="10" />
+                    <Field Name="channel_id" Ordinal="3" DbType="8" Precision="10" />
+                    <Field Name="owner" Ordinal="4" DbType="12" Length="200" />
+                  </Fields>
+                </Table>
+                <Table Name="channel_stores">
+                  <PkConstraintName Name="PK_channel_stores" />
+                  <Fields>
+                    <Field Name="channel_store_id" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" DbType="8" Precision="10" />
+                    <Field Name="channel_id" Ordinal="2" DbType="8" Precision="10" />
+                    <Field Name="campaign_id" Ordinal="3" DbType="8" Precision="10" />
+                    <Field Name="store_id" Ordinal="4" DbType="8" Precision="10" />
+                    <Field Name="date_added" Ordinal="5" IsOptional="true" DbType="28" />
+                    <Field Name="is_selected" Ordinal="6" HasDefaultValue="true" DefaultValue="(0)" DbType="8" Precision="10" />
+                  </Fields>
+                </Table>
+                <Table Name="channel_types">
+                  <PkConstraintName Name="PK_channel_types_channel_type_id" />
+                  <Fields>
+                    <Field Name="channel_type_id" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" DbType="8" Precision="10" />
+                    <Field Name="channel_type_name" Ordinal="2" DbType="12" Length="50" />
+                  </Fields>
+                </Table>
+                <Table Name="channels">
+                  <PkConstraintName Name="PK_channels_channel_id" />
+                  <Fields>
+                    <Field Name="channel_id" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" DbType="8" Precision="10" />
+                    <Field Name="campaign_id" Ordinal="2" DbType="8" Precision="10" />
+                    <Field Name="channel_name" Ordinal="3" DbType="12" Length="250" />
+                    <Field Name="channel_type_id" Ordinal="4" DbType="8" Precision="10" />
+                    <Field Name="description" Ordinal="5" IsOptional="true" HasDefaultValue="true" DefaultValue="NULL" DbType="12" Length="250" />
+                    <Field Name="start_date" Ordinal="6" DbType="28" />
+                    <Field Name="end_date" Ordinal="7" DbType="28" />
+                    <Field Name="channel_code" Ordinal="8" IsOptional="true" DbType="12" Length="10" />
+                    <Field Name="redemption_code_id" Ordinal="9" DbType="8" Precision="10" />
+                    <Field Name="is_locked" Ordinal="10" HasDefaultValue="true" DefaultValue="(0)" DbType="8" Precision="10" />
+                    <Field Name="created_by" Ordinal="11" DbType="12" Length="200" />
+                    <Field Name="store_option_id" Ordinal="12" HasDefaultValue="true" DefaultValue="(1)" DbType="8" Precision="10" />
+                  </Fields>
+                </Table>
+                <Table Name="products">
+                  <PkConstraintName Name="PK_products_product_id" />
+                  <Fields>
+                    <Field Name="product_id" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" DbType="8" Precision="10" />
+                    <Field Name="item_code" Ordinal="2" DbType="12" Length="20" />
+                    <Field Name="description" Ordinal="3" DbType="12" Length="30" />
+                    <Field Name="vendor_code" Ordinal="4" DbType="12" Length="20" />
+                    <Field Name="department_name" Ordinal="5" IsOptional="true" DbType="12" Length="50" />
+                    <Field Name="category_name" Ordinal="6" IsOptional="true" DbType="12" Length="50" />
+                    <Field Name="lifestage" Ordinal="7" IsOptional="true" HasDefaultValue="true" DefaultValue="NULL" DbType="12" Length="5" />
+                    <Field Name="limited_edition" Ordinal="8" IsOptional="true" HasDefaultValue="true" DefaultValue="NULL" DbType="12" Length="3" />
+                    <Field Name="unit_price" Ordinal="9" IsOptional="true" HasDefaultValue="true" DefaultValue="NULL" DbType="5" Precision="12" Scale="3" />
+                    <Field Name="nz_unit_price" Ordinal="10" IsOptional="true" HasDefaultValue="true" DefaultValue="NULL" DbType="5" Precision="12" Scale="3" />
+                    <Field Name="launch_date" Ordinal="11" IsOptional="true" HasDefaultValue="true" DefaultValue="NULL" DbType="28" />
+                    <Field Name="ranging_code_mecca" Ordinal="12" IsOptional="true" HasDefaultValue="true" DefaultValue="NULL" DbType="12" Length="342" />
+                    <Field Name="ranging_code_kit" Ordinal="13" IsOptional="true" HasDefaultValue="true" DefaultValue="NULL" DbType="12" Length="342" />
+                    <Field Name="ranging_code_imo" Ordinal="14" IsOptional="true" HasDefaultValue="true" DefaultValue="NULL" DbType="12" Length="342" />
+                    <Field Name="ranging_code_maxima" Ordinal="15" IsOptional="true" HasDefaultValue="true" DefaultValue="NULL" DbType="12" Length="342" />
+                    <Field Name="company_soh" Ordinal="16" IsOptional="true" HasDefaultValue="true" DefaultValue="(0)" DbType="8" Precision="10" />
+                    <Field Name="transition_item_code" Ordinal="17" IsOptional="true" DbType="24" Length="20" />
+                    <Field Name="no_tester" Ordinal="18" IsOptional="true" DbType="24" Length="50" />
+                    <Field Name="stock_on_order" Ordinal="19" IsOptional="true" DbType="8" Precision="10" />
+                    <Field Name="expected_receipt_date" Ordinal="20" IsOptional="true" DbType="4" />
+                    <Field Name="travel_size" Ordinal="21" IsOptional="true" DbType="24" Length="5" />
+                    <Field Name="termination_date" Ordinal="22" IsOptional="true" DbType="24" Length="10" />
+                    <Field Name="item_sid" Ordinal="23" IsOptional="true" DbType="5" Precision="19" />
+                  </Fields>
+                  <UniqueConstraints>
+                    <UniqueConstraint Name="products$item_code">
+                      <Field Name="item_code" />
+                    </UniqueConstraint>
+                  </UniqueConstraints>
+                </Table>
+                <Table Name="redemption_codes">
+                  <PkConstraintName Name="PK_redemption_codes_redemption_code_id" />
+                  <Fields>
+                    <Field Name="redemption_code_id" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" DbType="8" Precision="10" />
+                    <Field Name="offer_code" Ordinal="2" DbType="12" Length="20" />
+                    <Field Name="description" Ordinal="3" DbType="12" Length="50" />
+                  </Fields>
+                  <UniqueConstraints>
+                    <UniqueConstraint Name="redemption_codes$offer_code">
+                      <Field Name="offer_code" />
+                    </UniqueConstraint>
+                  </UniqueConstraints>
+                </Table>
+                <Table Name="store">
+                  <PkConstraintName Name="PK_store" />
+                  <Fields>
+                    <Field Name="store_id" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" DbType="8" Precision="10" />
+                    <Field Name="store_code" Ordinal="2" DbType="12" Length="20" />
+                    <Field Name="store_name" Ordinal="3" DbType="12" Length="50" />
+                    <Field Name="business_name" Ordinal="4" DbType="12" Length="50" />
+                    <Field Name="open_date" Ordinal="5" IsOptional="true" DbType="4" />
+                  </Fields>
+                </Table>
+                <Table Name="store_option">
+                  <PkConstraintName Name="PK_store_option" />
+                  <Fields>
+                    <Field Name="StoreOptionID" Ordinal="1" IsPrimaryKey="true" DbType="8" Precision="10" />
+                    <Field Name="StoreOptionName" Ordinal="2" DbType="24" Length="50" />
+                  </Fields>
+                </Table>
+              </Tables>
+              <StoredProcedures>
+                <StoredProcedure Name="DeleteSegmentCustomers">
+                  <Parameters>
+                    <Parameter Name="@channelId" Direction="1" Ordinal="1" DbType="8" Precision="10" />
+                  </Parameters>
+                </StoredProcedure>
+                <StoredProcedure Name="GetSegmentCustomers">
+                  <Parameters>
+                    <Parameter Name="@channelId" Direction="1" Ordinal="1" DbType="8" Precision="10" />
+                    <Parameter Name="@totalCustomers" Direction="3" Ordinal="2" DbType="8" Precision="10" />
+                  </Parameters>
+                </StoredProcedure>
+              </StoredProcedures>
+            </Schema>
+          </Schemas>
+          <ForeignKeyConstraints>
+            <ForeignKeyConstraint Name="dbo:campaign_items:FK_campaign_items_campaigns">
+              <FieldPairs>
+                <FieldPair PkField="dbo:campaigns:campaign_id" FkField="dbo:campaign_items:campaign_id" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:campaign_items:FK_campaign_items_products">
+              <FieldPairs>
+                <FieldPair PkField="dbo:products:product_id" FkField="dbo:campaign_items:product_id" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:campaign_owners:FK_campaign_owners_campaigns">
+              <FieldPairs>
+                <FieldPair PkField="dbo:campaigns:campaign_id" FkField="dbo:campaign_owners:campaign_id" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:campaigns:FK_campaigns_campaign_types">
+              <FieldPairs>
+                <FieldPair PkField="dbo:campaign_types:campaign_type_id" FkField="dbo:campaigns:campaign_type_id" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:campaigns:FK_campaigns_redemption_codes">
+              <FieldPairs>
+                <FieldPair PkField="dbo:redemption_codes:redemption_code_id" FkField="dbo:campaigns:redemption_code_id" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:channel_customers:FK_channel_customers_channels">
+              <FieldPairs>
+                <FieldPair PkField="dbo:channels:channel_id" FkField="dbo:channel_customers:channel_id" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:channel_items:FK_channel_items_channels">
+              <FieldPairs>
+                <FieldPair PkField="dbo:channels:channel_id" FkField="dbo:channel_items:channel_id" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:channel_items:FK_channel_items_products">
+              <FieldPairs>
+                <FieldPair PkField="dbo:products:product_id" FkField="dbo:channel_items:product_id" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:channel_owners:FK_channel_owners_campaigns">
+              <FieldPairs>
+                <FieldPair PkField="dbo:campaigns:campaign_id" FkField="dbo:channel_owners:campaign_id" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:channel_owners:FK_channel_owners_channels">
+              <FieldPairs>
+                <FieldPair PkField="dbo:channels:channel_id" FkField="dbo:channel_owners:channel_id" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:channels:FK_channels_campaigns">
+              <FieldPairs>
+                <FieldPair PkField="dbo:campaigns:campaign_id" FkField="dbo:channels:campaign_id" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:channels:FK_channels_channel_types">
+              <FieldPairs>
+                <FieldPair PkField="dbo:channel_types:channel_type_id" FkField="dbo:channels:channel_type_id" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+            <ForeignKeyConstraint Name="dbo:channels:FK_channels_redemption_codes">
+              <FieldPairs>
+                <FieldPair PkField="dbo:redemption_codes:redemption_code_id" FkField="dbo:channels:redemption_code_id" />
+              </FieldPairs>
+            </ForeignKeyConstraint>
+          </ForeignKeyConstraints>
+        </Catalog>
+      </Catalogs>
+    </TargetDatabase>
+  </TargetDatabases>
+  <MappingStores>
+    <MappingStore Type="2D18D138-1DD2-467E-86CC-4838250611AE">
+      <EntityMappings>
+        <EntityMapping EntityName=":Campaign" TargetName="mecca_cmt:dbo:campaigns">
+          <FieldMappings>
+            <FieldMapping FieldName="BusinessFormat" TargetFieldName="business_format" />
+            <FieldMapping FieldName="CampaignCode" TargetFieldName="campaign_code" />
+            <FieldMapping FieldName="CampaignId" TargetFieldName="campaign_id" SequenceToUse="SCOPE_IDENTITY()" />
+            <FieldMapping FieldName="CampaignName" TargetFieldName="campaign_name" />
+            <FieldMapping FieldName="CampaignTypeId" TargetFieldName="campaign_type_id" />
+            <FieldMapping FieldName="CreatedBy" TargetFieldName="created_by" />
+            <FieldMapping FieldName="Description" TargetFieldName="description" />
+            <FieldMapping FieldName="EndDate" TargetFieldName="end_date" />
+            <FieldMapping FieldName="IsLocked" TargetFieldName="is_locked" />
+            <FieldMapping FieldName="RedemptionCodeId" TargetFieldName="redemption_code_id" />
+            <FieldMapping FieldName="StartDate" TargetFieldName="start_date" />
+            <FieldMapping FieldName="StoreOptionId" TargetFieldName="store_option_id" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName=":CampaignItem" TargetName="mecca_cmt:dbo:campaign_items">
+          <FieldMappings>
+            <FieldMapping FieldName="CampaignId" TargetFieldName="campaign_id" />
+            <FieldMapping FieldName="CampaignItemId" TargetFieldName="campaign_item_id" SequenceToUse="SCOPE_IDENTITY()" />
+            <FieldMapping FieldName="DateAdded" TargetFieldName="date_added" />
+            <FieldMapping FieldName="EndDate" TargetFieldName="end_date" />
+            <FieldMapping FieldName="ProductId" TargetFieldName="product_id" />
+            <FieldMapping FieldName="StartDate" TargetFieldName="start_date" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName=":CampaignOwner" TargetName="mecca_cmt:dbo:campaign_owners">
+          <FieldMappings>
+            <FieldMapping FieldName="CampaignId" TargetFieldName="campaign_id" />
+            <FieldMapping FieldName="CampaignOwnerId" TargetFieldName="campaign_owner_id" SequenceToUse="SCOPE_IDENTITY()" />
+            <FieldMapping FieldName="Owner" TargetFieldName="owner" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName=":CampaignStore" TargetName="mecca_cmt:dbo:campaign_stores">
+          <FieldMappings>
+            <FieldMapping FieldName="CampaignId" TargetFieldName="campaign_id" />
+            <FieldMapping FieldName="CampaignStoreId" TargetFieldName="campaign_store_id" SequenceToUse="SCOPE_IDENTITY()" />
+            <FieldMapping FieldName="DateAdded" TargetFieldName="date_added" />
+            <FieldMapping FieldName="IsSelected" TargetFieldName="is_selected" />
+            <FieldMapping FieldName="StoreId" TargetFieldName="store_id" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName=":CampaignType" TargetName="mecca_cmt:dbo:campaign_types">
+          <FieldMappings>
+            <FieldMapping FieldName="CampaignTypeId" TargetFieldName="campaign_type_id" SequenceToUse="SCOPE_IDENTITY()" />
+            <FieldMapping FieldName="CampaignTypeName" TargetFieldName="campaign_type_name" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName=":Channel" TargetName="mecca_cmt:dbo:channels">
+          <FieldMappings>
+            <FieldMapping FieldName="CampaignId" TargetFieldName="campaign_id" />
+            <FieldMapping FieldName="ChannelCode" TargetFieldName="channel_code" />
+            <FieldMapping FieldName="ChannelId" TargetFieldName="channel_id" SequenceToUse="SCOPE_IDENTITY()" />
+            <FieldMapping FieldName="ChannelName" TargetFieldName="channel_name" />
+            <FieldMapping FieldName="ChannelTypeId" TargetFieldName="channel_type_id" />
+            <FieldMapping FieldName="CreatedBy" TargetFieldName="created_by" />
+            <FieldMapping FieldName="Description" TargetFieldName="description" />
+            <FieldMapping FieldName="EndDate" TargetFieldName="end_date" />
+            <FieldMapping FieldName="IsLocked" TargetFieldName="is_locked" />
+            <FieldMapping FieldName="RedemptionCodeId" TargetFieldName="redemption_code_id" />
+            <FieldMapping FieldName="StartDate" TargetFieldName="start_date" />
+            <FieldMapping FieldName="StoreOptionId" TargetFieldName="store_option_id" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName=":ChannelCustomer" TargetName="mecca_cmt:dbo:channel_customers">
+          <FieldMappings>
+            <FieldMapping FieldName="ChannelCustomerId" TargetFieldName="channel_customer_id" SequenceToUse="SCOPE_IDENTITY()" />
+            <FieldMapping FieldName="ChannelId" TargetFieldName="channel_id" />
+            <FieldMapping FieldName="CustomerSid" TargetFieldName="customer_sid" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName=":ChannelItem" TargetName="mecca_cmt:dbo:channel_items">
+          <FieldMappings>
+            <FieldMapping FieldName="ChannelId" TargetFieldName="channel_id" />
+            <FieldMapping FieldName="ChannelItemId" TargetFieldName="channel_item_id" SequenceToUse="SCOPE_IDENTITY()" />
+            <FieldMapping FieldName="Comments" TargetFieldName="comments" />
+            <FieldMapping FieldName="LiveMerchQty" TargetFieldName="live_merch_qty" />
+            <FieldMapping FieldName="NumStores" TargetFieldName="num_stores" />
+            <FieldMapping FieldName="ProductId" TargetFieldName="product_id" />
+            <FieldMapping FieldName="SampleQty" TargetFieldName="sample_qty" />
+            <FieldMapping FieldName="TesterMerchQty" TargetFieldName="tester_merch_qty" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName=":ChannelOwner" TargetName="mecca_cmt:dbo:channel_owners">
+          <FieldMappings>
+            <FieldMapping FieldName="CampaignId" TargetFieldName="campaign_id" />
+            <FieldMapping FieldName="ChannelId" TargetFieldName="channel_id" />
+            <FieldMapping FieldName="ChannelOwnerId" TargetFieldName="channel_owner_id" SequenceToUse="SCOPE_IDENTITY()" />
+            <FieldMapping FieldName="Owner" TargetFieldName="owner" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName=":ChannelStore" TargetName="mecca_cmt:dbo:channel_stores">
+          <FieldMappings>
+            <FieldMapping FieldName="CampaignId" TargetFieldName="campaign_id" />
+            <FieldMapping FieldName="ChannelId" TargetFieldName="channel_id" />
+            <FieldMapping FieldName="ChannelStoreId" TargetFieldName="channel_store_id" SequenceToUse="SCOPE_IDENTITY()" />
+            <FieldMapping FieldName="DateAdded" TargetFieldName="date_added" />
+            <FieldMapping FieldName="IsSelected" TargetFieldName="is_selected" />
+            <FieldMapping FieldName="StoreId" TargetFieldName="store_id" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName=":ChannelType" TargetName="mecca_cmt:dbo:channel_types">
+          <FieldMappings>
+            <FieldMapping FieldName="ChannelTypeId" TargetFieldName="channel_type_id" SequenceToUse="SCOPE_IDENTITY()" />
+            <FieldMapping FieldName="ChannelTypeName" TargetFieldName="channel_type_name" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName=":Product" TargetName="mecca_cmt:dbo:products">
+          <FieldMappings>
+            <FieldMapping FieldName="CategoryName" TargetFieldName="category_name" />
+            <FieldMapping FieldName="CompanySoh" TargetFieldName="company_soh" />
+            <FieldMapping FieldName="DepartmentName" TargetFieldName="department_name" />
+            <FieldMapping FieldName="Description" TargetFieldName="description" />
+            <FieldMapping FieldName="ExpectedReceiptDate" TargetFieldName="expected_receipt_date" />
+            <FieldMapping FieldName="ItemCode" TargetFieldName="item_code" />
+            <FieldMapping FieldName="ItemSid" TargetFieldName="item_sid" />
+            <FieldMapping FieldName="LaunchDate" TargetFieldName="launch_date" />
+            <FieldMapping FieldName="Lifestage" TargetFieldName="lifestage" />
+            <FieldMapping FieldName="LimitedEdition" TargetFieldName="limited_edition" />
+            <FieldMapping FieldName="NoTester" TargetFieldName="no_tester" />
+            <FieldMapping FieldName="NzUnitPrice" TargetFieldName="nz_unit_price" />
+            <FieldMapping FieldName="ProductId" TargetFieldName="product_id" SequenceToUse="SCOPE_IDENTITY()" />
+            <FieldMapping FieldName="RangingCodeImo" TargetFieldName="ranging_code_imo" />
+            <FieldMapping FieldName="RangingCodeKit" TargetFieldName="ranging_code_kit" />
+            <FieldMapping FieldName="RangingCodeMaxima" TargetFieldName="ranging_code_maxima" />
+            <FieldMapping FieldName="RangingCodeMecca" TargetFieldName="ranging_code_mecca" />
+            <FieldMapping FieldName="StockOnOrder" TargetFieldName="stock_on_order" />
+            <FieldMapping FieldName="TerminationDate" TargetFieldName="termination_date" />
+            <FieldMapping FieldName="TransitionItemCode" TargetFieldName="transition_item_code" />
+            <FieldMapping FieldName="TravelSize" TargetFieldName="travel_size" />
+            <FieldMapping FieldName="UnitPrice" TargetFieldName="unit_price" />
+            <FieldMapping FieldName="VendorCode" TargetFieldName="vendor_code" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName=":RedemptionCode" TargetName="mecca_cmt:dbo:redemption_codes">
+          <FieldMappings>
+            <FieldMapping FieldName="Description" TargetFieldName="description" />
+            <FieldMapping FieldName="OfferCode" TargetFieldName="offer_code" />
+            <FieldMapping FieldName="RedemptionCodeId" TargetFieldName="redemption_code_id" SequenceToUse="SCOPE_IDENTITY()" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName=":Store" TargetName="mecca_cmt:dbo:store">
+          <FieldMappings>
+            <FieldMapping FieldName="BusinessName" TargetFieldName="business_name" />
+            <FieldMapping FieldName="OpenDate" TargetFieldName="open_date" />
+            <FieldMapping FieldName="StoreCode" TargetFieldName="store_code" />
+            <FieldMapping FieldName="StoreId" TargetFieldName="store_id" SequenceToUse="SCOPE_IDENTITY()" />
+            <FieldMapping FieldName="StoreName" TargetFieldName="store_name" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName=":StoreOption" TargetName="mecca_cmt:dbo:store_option">
+          <FieldMappings>
+            <FieldMapping FieldName="StoreOptionId" TargetFieldName="StoreOptionID" />
+            <FieldMapping FieldName="StoreOptionName" TargetFieldName="StoreOptionName" />
+          </FieldMappings>
+        </EntityMapping>
+      </EntityMappings>
+      <TypedViewMappings>
+        <TypedViewMapping TypedViewName=":Campaign1" TargetName="mecca_cmt:dbo:campaigns">
+          <FieldMappings>
+            <FieldMapping FieldName="BusinessFormat" TargetFieldName="business_format" />
+            <FieldMapping FieldName="CampaignCode" TargetFieldName="campaign_code" />
+            <FieldMapping FieldName="CampaignId" TargetFieldName="campaign_id" />
+            <FieldMapping FieldName="CampaignName" TargetFieldName="campaign_name" />
+            <FieldMapping FieldName="CampaignTypeId" TargetFieldName="campaign_type_id" />
+            <FieldMapping FieldName="CreatedBy" TargetFieldName="created_by" />
+            <FieldMapping FieldName="Description" TargetFieldName="description" />
+            <FieldMapping FieldName="EndDate" TargetFieldName="end_date" />
+            <FieldMapping FieldName="IsLocked" TargetFieldName="is_locked" />
+            <FieldMapping FieldName="RedemptionCodeId" TargetFieldName="redemption_code_id" />
+            <FieldMapping FieldName="StartDate" TargetFieldName="start_date" />
+            <FieldMapping FieldName="StoreOptionId" TargetFieldName="store_option_id" />
+          </FieldMappings>
+        </TypedViewMapping>
+        <TypedViewMapping TypedViewName=":CampaignOwner1" TargetName="mecca_cmt:dbo:campaign_owners">
+          <FieldMappings>
+            <FieldMapping FieldName="CampaignId" TargetFieldName="campaign_id" />
+            <FieldMapping FieldName="CampaignOwnerId" TargetFieldName="campaign_owner_id" />
+            <FieldMapping FieldName="Owner" TargetFieldName="owner" />
+          </FieldMappings>
+        </TypedViewMapping>
+        <TypedViewMapping TypedViewName=":CampaignType1" TargetName="mecca_cmt:dbo:campaign_types">
+          <FieldMappings>
+            <FieldMapping FieldName="CampaignTypeId" TargetFieldName="campaign_type_id" />
+            <FieldMapping FieldName="CampaignTypeName" TargetFieldName="campaign_type_name" />
+          </FieldMappings>
+        </TypedViewMapping>
+        <TypedViewMapping TypedViewName=":Channel1" TargetName="mecca_cmt:dbo:channels">
+          <FieldMappings>
+            <FieldMapping FieldName="CampaignId" TargetFieldName="campaign_id" />
+            <FieldMapping FieldName="ChannelCode" TargetFieldName="channel_code" />
+            <FieldMapping FieldName="ChannelId" TargetFieldName="channel_id" />
+            <FieldMapping FieldName="ChannelName" TargetFieldName="channel_name" />
+            <FieldMapping FieldName="ChannelTypeId" TargetFieldName="channel_type_id" />
+            <FieldMapping FieldName="CreatedBy" TargetFieldName="created_by" />
+            <FieldMapping FieldName="Description" TargetFieldName="description" />
+            <FieldMapping FieldName="EndDate" TargetFieldName="end_date" />
+            <FieldMapping FieldName="IsLocked" TargetFieldName="is_locked" />
+            <FieldMapping FieldName="RedemptionCodeId" TargetFieldName="redemption_code_id" />
+            <FieldMapping FieldName="StartDate" TargetFieldName="start_date" />
+            <FieldMapping FieldName="StoreOptionId" TargetFieldName="store_option_id" />
+          </FieldMappings>
+        </TypedViewMapping>
+        <TypedViewMapping TypedViewName=":ChannelCustomer1" TargetName="mecca_cmt:dbo:channel_customers">
+          <FieldMappings>
+            <FieldMapping FieldName="ChannelCustomerId" TargetFieldName="channel_customer_id" />
+            <FieldMapping FieldName="ChannelId" TargetFieldName="channel_id" />
+            <FieldMapping FieldName="CustomerSid" TargetFieldName="customer_sid" />
+          </FieldMappings>
+        </TypedViewMapping>
+        <TypedViewMapping TypedViewName=":ChannelItem1" TargetName="mecca_cmt:dbo:channel_items">
+          <FieldMappings>
+            <FieldMapping FieldName="ChannelId" TargetFieldName="channel_id" />
+            <FieldMapping FieldName="ChannelItemId" TargetFieldName="channel_item_id" />
+            <FieldMapping FieldName="Comments" TargetFieldName="comments" />
+            <FieldMapping FieldName="LiveMerchQty" TargetFieldName="live_merch_qty" />
+            <FieldMapping FieldName="NumStores" TargetFieldName="num_stores" />
+            <FieldMapping FieldName="ProductId" TargetFieldName="product_id" />
+            <FieldMapping FieldName="SampleQty" TargetFieldName="sample_qty" />
+            <FieldMapping FieldName="TesterMerchQty" TargetFieldName="tester_merch_qty" />
+          </FieldMappings>
+        </TypedViewMapping>
+        <TypedViewMapping TypedViewName=":ChannelOwner1" TargetName="mecca_cmt:dbo:channel_owners">
+          <FieldMappings>
+            <FieldMapping FieldName="CampaignId" TargetFieldName="campaign_id" />
+            <FieldMapping FieldName="ChannelId" TargetFieldName="channel_id" />
+            <FieldMapping FieldName="ChannelOwnerId" TargetFieldName="channel_owner_id" />
+            <FieldMapping FieldName="Owner" TargetFieldName="owner" />
+          </FieldMappings>
+        </TypedViewMapping>
+        <TypedViewMapping TypedViewName=":ChannelType1" TargetName="mecca_cmt:dbo:channel_types">
+          <FieldMappings>
+            <FieldMapping FieldName="ChannelTypeId" TargetFieldName="channel_type_id" />
+            <FieldMapping FieldName="ChannelTypeName" TargetFieldName="channel_type_name" />
+          </FieldMappings>
+        </TypedViewMapping>
+        <TypedViewMapping TypedViewName=":RedemptionCode1" TargetName="mecca_cmt:dbo:redemption_codes">
+          <FieldMappings>
+            <FieldMapping FieldName="Description" TargetFieldName="description" />
+            <FieldMapping FieldName="OfferCode" TargetFieldName="offer_code" />
+            <FieldMapping FieldName="RedemptionCodeId" TargetFieldName="redemption_code_id" />
+          </FieldMappings>
+        </TypedViewMapping>
+      </TypedViewMappings>
+      <SPCallMappings>
+        <SPCallMapping SPCallName=":DeleteSegmentCustomers" TargetName="mecca_cmt:dbo:DeleteSegmentCustomers">
+          <FieldMappings>
+            <FieldMapping FieldName="ChannelId" TargetFieldName="@channelId" />
+          </FieldMappings>
+        </SPCallMapping>
+        <SPCallMapping SPCallName=":GetSegmentCustomers" TargetName="mecca_cmt:dbo:GetSegmentCustomers">
+          <FieldMappings>
+            <FieldMapping FieldName="ChannelId" TargetFieldName="@channelId" />
+            <FieldMapping FieldName="TotalCustomers" TargetFieldName="@totalCustomers" />
+          </FieldMappings>
+        </SPCallMapping>
+      </SPCallMappings>
+      <TvfCallMappings />
+      <TypeConversionDefinitions />
+    </MappingStore>
+  </MappingStores>
+  <ModelViews />
+</Project>

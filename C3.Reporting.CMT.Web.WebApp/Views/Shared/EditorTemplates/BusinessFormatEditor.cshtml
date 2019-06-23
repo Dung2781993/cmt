@@ -1,0 +1,24 @@
+﻿
+
+@(Html.Kendo().DropDownList()
+    .Name("BusinessFormat") 
+    .DataValueField("Text") 
+    .DataTextField("Text") 
+    .BindTo(new List<SelectListItem>() {
+      new SelectListItem() {
+          Text = "MECCA",
+          Value = "1"
+      },
+      new SelectListItem() {
+          Text = "MAXIMA",
+          Value = "2"
+      },
+      new SelectListItem() {
+          Text = "IMO",
+          Value = "3"
+      },
+      new SelectListItem() {
+          Text = "COMPANY",
+          Value = "4"
+      }})
+)

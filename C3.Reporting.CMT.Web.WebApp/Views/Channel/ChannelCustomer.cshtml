@@ -1,0 +1,141 @@
+﻿@using C3.Reporting.CMT.Web.WebApp.Models
+@{
+    ViewBag.Title = "Segment Customers";
+}
+
+<h2>Segment Customers</h2>
+
+<h4>All Available Segments</h4>
+
+@if (TempData["UploadResult"] != null) {
+  <p>@TempData["UploadResult"]</p>
+}
+    
+<div>
+    @(Html.Kendo().Grid<ChannelModel>()
+          .Name("ChannelGrid")
+          .Columns(columns =>
+              {
+                  columns.ForeignKey(c => c.MasterCampaignId, new SelectList(ViewBag.Campaigns, "CampaignId", "BusinessFormat"))
+                         .Filterable(false).Title("Format");
+                  columns.ForeignKey(c => c.MasterCampaignId, new SelectList(ViewBag.Campaigns, "CampaignId", "CampaignName"))
+                         .Filterable(false).Title("Campaign Name");
+                  columns.Bound(c => c.ChannelCode).Title("Segment Code");
+                  columns.Bound(c => c.ChannelName).Title("Segment Name").Width(150);
+                  columns.ForeignKey(c => c.ChannelTypeId, new SelectList(ViewBag.ChannelTypes, "ChannelTypeId", "ChannelTypeName"))
+                         .Title("Segment Type");
+                  columns.Bound(c => c.Description).Width(250);
+                  columns.Bound(c => c.SegStartDate).Format("{0:dd/MM/yyyy}");
+                  columns.Bound(c => c.SegEndDate).Format("{0:dd/MM/yyyy}");
+                  columns.ForeignKey(c => c.RedemptionCodeId, new SelectList(ViewBag.RedemptionCodes, "RedemptionCodeId", "Description"))
+                         .Title("Offer Code").Width(250);
+              })
+          .Pageable()
+          .Sortable()
+          .Navigatable()
+          .Filterable(filterable => filterable.Extra(false))
+          .ClientDetailTemplateId("SegmentCustomerTemplate")
+          .Scrollable(s => s.Height("auto"))
+          .HtmlAttributes(new { style = "font-size:12px" })
+          .DataSource(dataSource => dataSource
+                                        .Ajax()
+                                        .PageSize(20)
+                                        .Events(events => events.Error("error_handler"))
+                                        .Read(read => read.Action("Channel_Read", "Channel"))
+                                        .Model(model => model.Id(p => p.ChannelId))
+          )
+          .Selectable(selectable => selectable
+                                        .Mode(GridSelectionMode.Single))
+          .Resizable(resize => resize.Columns(true))
+          .Events(events => events.DetailExpand("detailExpand")) 
+          )
+    
+   
+    <script id="SegmentCustomerTemplate" type="text/kendo-tmpl">
+       
+       @(Html.Kendo().TabStrip()
+            .Name("tabStrip_#=ChannelId#")
+            .SelectedIndex(0)
+            .Items(tabStrip =>
+                {
+                    tabStrip.Add().Text("Load Customers")
+                            .Content(@<text>
+                                        
+                                        <div>
+                                            <form action="/Channel/Upload?ChannelId=#=ChannelId#" enctype="multipart/form-data" id="form0" method="post" novalidate="novalidate">
+                                                  @(Html.Kendo().Upload()
+                                                        .Name("files")
+                                                        .Events(events => events.Select("onSelect"))
+                                                        .ToClientTemplate()
+                                                        )
+                                                  <input type="submit" class="k-button" value="Submit" />                                            
+                                            </form>      
+                                        </div>
+                                                                  
+                                        
+                                    </text>
+                            );
+                    tabStrip.Add().Text("Delete Customers")
+                            .Content(@<text>
+                                        <div>
+                                            <form action="/Channel/Delete?ChannelId=#=ChannelId#" id="form1" method="post" novalidate="novalidate">
+                                                  <input type="submit" class="k-button" value="Remove All" onclick="return confirm('Are you sure you want to remove all customers?')" />
+                                            </form>
+                                        </div>
+                                    </text>
+                            );
+                    tabStrip.Add().Text("Verify Customers")
+                        .Content(@<text>
+                                        <div>
+                                            <form action="/Channel/VerifySegmentCustomer?ChannelId=#=ChannelId#" id="form1" method="post" novalidate="novalidate">
+                                                  <input type="submit" class="k-button" value="Verify" />
+                                            </form>                                       
+                                        </div>
+                                    </text>
+                            );
+                })
+               .ToClientTemplate()
+    )   
+    </script>
+
+    <script>
+        var expandedRow;
+        
+        function error_handler(e) {
+            if (e.errors) {
+                var message = "Errors:\n";
+                $.each(e.errors, function (key, value) {
+                    if ('errors' in value) {
+                        $.each(value.errors, function () {
+                            message += this + "\n";
+                        });
+                    }
+                });
+                alert(message);
+            }
+        }
+        
+        function detailExpand(e) {
+            var grid = $('#ChannelGrid').data('kendoGrid');
+            // Only one open at a time
+            if (expandedRow != null && expandedRow[0] != e.masterRow[0]) {
+                grid.collapseRow(expandedRow);
+            }
+            expandedRow = e.masterRow;
+            grid.select(expandedRow);
+        }
+        
+        function onSelect(e) {
+            
+            $.each(e.files, function (index, value) {
+                if (value.extension != ".csv") {
+                    e.preventDefault();
+                    alert("Please upload CSV files only.");
+                }
+            });
+        }
+
+    </script>
+    
+
+</div>
